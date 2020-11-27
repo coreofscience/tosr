@@ -1,0 +1,28 @@
+Package: tosr
+Type: Package
+Title: Tree of Science for Scientometrics in R
+Version: 0.1.0
+Author: person("Sebastian", "Robledo", email = "director@coreofscience.com", role = c("aut", "cre"))
+Maintainer: Sebastian Robledo <director@coreofscience.com>
+Description: This package is the implementation of the algoritm SAP for citation 
+             analisys and Scientometrics
+License: MIT
+Encoding: UTF-8
+LazyData: true
+Depends: tidyverse,
+         dplyr,
+         tidyr,
+         bibliometrix,
+         rebus,
+         igraph
+Imports: ggplot2,
+         CINNA,
+         formattable,
+         tm,
+         lubridate,
+         gt,
+         dplyr,
+         wordcloud,
+         magrittr,
+         visNetwork
+RoxygenNote: 7.1.1
