@@ -12,8 +12,14 @@ remotes::install_github("https://github.com/coreofscience/tosr" , dependencies =
 
 # Ejemplo
 library(tosr)                                # Se carga la libreria 
+
+
 tosinfo <- tosr('save.txt','scopus.bib')     # se llama la funcion tosr que realiza todo el proceso (se cargan los archivos que se desean procesar al Rstudio cloud)
 
 bibliometrix_df <- tosinfo$bibliometrix_df   # Bibliometrix data frame 
+
+
 grafo           <- tosinfo$graph             # Grafo con las subareas 
+
+
 tos.subfields   <- tosinfo$ToS_subfields     # Dataframe con el 'Tree of science' para las tres subareas mas grandes  
