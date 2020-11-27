@@ -11,7 +11,7 @@ Para instalar el paquete de tosr en el Rstudio cloud se copia la siguiente instr
 remotes::install_github("https://github.com/coreofscience/tosr" , dependencies = TRUE)
 
 # Ejemplo
-library(tosr)                                   # Se carga la libreria 
+**library(tosr)**                                  # Se carga la libreria 
 
 
 **tosinfo <- tosr('save.txt','scopus.bib')**     # se llama la funcion tosr (se cargan los archivos que se desean procesar al Rstudio cloud)
