@@ -23,3 +23,7 @@ remotes::install_github("https://github.com/coreofscience/tosr" , dependencies =
 
 
 **tos.subfields   <- tosinfo$ToS_subfields**     # Dataframe con el 'Tree of science' para las tres subareas mas grandes  
+
+# Referencias
+1. https://revistas.unal.edu.co/index.php/ingeinv/article/view/77718/0
+2. https://rdrr.io/cran/remotes/man/install_git.html
