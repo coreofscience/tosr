@@ -8,4 +8,4 @@ install.packages("remotes")
 # Paso 2
 Para instalar el paquete de tosr en el Rstudio cloud se copia la siguiente instruccion y se ejecuta. Se espera un momento a que instale y luego se puede usar el paquete.  
 
-remotes::install_github("https://github.com/coreofscience/tosr",dependencies = TRUE)
+remotes::install_github("https://github.com/coreofscience/tosr" , dependencies = TRUE)
