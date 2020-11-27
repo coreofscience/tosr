@@ -44,11 +44,7 @@ tosload_aux <- function(file){
   if (extension == "bib"){
     dataframe <- bibliometrix::convert2df(file = file, dbsource = "scopus", format   = "bibtex") %>%
     as_tibble()%>%
-    mutate(SR_TOS = str_extract(SR, one_or_more(WRD) %R%
-                                  SPC %R% one_or_more(WRD) %R%
-                                  "," %R% SPC %R%
-                                  one_or_more(DGT) %R% ","),
-           SR_TOS = str_c(SR_TOS, " ", SO))
+    mutate(SR_TOS = paste(SR_FULL,', DOI:',DI))
 
   }
 

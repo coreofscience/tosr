@@ -52,13 +52,8 @@ tosr_process <- function(graph1) {
   }
 
   if (ext == 'bib'){
-    tos$id <- sub("^(\\S*\\s+\\S+\\s+\\S+).*","\\1", tos$id)
-
     return(tos)
   }
-
-
-
 
   return(tos)
 

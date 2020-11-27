@@ -125,7 +125,7 @@ graph.bib <- function(scopus_dataframe, ext){
 
 
   scopus_dataframe <- scopus_dataframe %>%
-    mutate(ID_TOS = str_extract(SR, ".*,"))
+    mutate(ID_TOS = paste(SR,DI))
 
   nodes_scopus_type <-
     scopus_dataframe %>%
@@ -138,8 +138,7 @@ graph.bib <- function(scopus_dataframe, ext){
            year = str_remove_all(year, "\\(|\\)")) %>%
     filter(!grepl(pattern = "[():[:digit:]]", lastname),
            str_length(year) == 4) %>%
-    mutate(ID_TOS = paste0(lastname, ", ", year, ","),
-           CITE = CR) %>%
+    mutate(CITE = CR) %>%
     unique() %>%
     select(ID_TOS, CITE)
 
@@ -233,15 +232,13 @@ graph_ml <- function(biblio_wos_scopus,ext){
 
   biblio_wos_scopus_type <-
     bind_rows(df_wos, df_scopus) %>%
-    mutate(ID_TOS = str_extract(SR, ".*,"))
+    mutate(ID_TOS = paste(SR_FULL, ', DOI:', DI))
 
 
   edge_list_wos_type <-
     biblio_wos_scopus_type %>%
     dplyr::filter(ref_type == "wos") %>%
     separate_rows(CR, sep = ";") %>%
-    mutate(CR = sub("^(\\S*\\s+\\S+\\s+\\S+).*", # removing strings after second comma
-                    "\\1", CR)) %>%
     select(ID_TOS, CR) %>%
     na.omit() %>%
     unique()
@@ -259,7 +256,6 @@ graph_ml <- function(biblio_wos_scopus,ext){
            year = str_remove_all(year, "\\(|\\)")) %>%
     filter(!grepl(pattern = "[():[:digit:]]", lastname),
            str_length(year) == 4) %>%
-    mutate(CR = paste0(lastname, ", ", year, ",")) %>%
     select(ID_TOS, CR)
 
   edgelist_wos_scopus <-
