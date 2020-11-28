@@ -17,7 +17,7 @@ tosr_load <- function(file){
   }
 
   if (nfiles > 1){
-    data = tosload_aux(file)
+    #data = tosload_aux(file)
     d <- lapply(file, tosload_aux)
     L <- list()
     i <- 1
@@ -25,7 +25,8 @@ tosr_load <- function(file){
       L[[i]] <- d[[i]]$df
     }
 
-    dataframe <- mergeDbSources2(L, remove.duplicated = TRUE)
+    dataframe <- mergeDbSources2(L, remove.duplicated = TRUE) %>%
+      mutate(SR_TOS = paste(SR_FULL,'; DOI:',DI))
 
 
     data      <- list(df = dataframe, ext = 'comb')
@@ -43,15 +44,13 @@ tosload_aux <- function(file){
 
   if (extension == "bib"){
     dataframe <- bibliometrix::convert2df(file = file, dbsource = "scopus", format   = "bibtex") %>%
-    as_tibble()%>%
-    mutate(SR_TOS = paste(SR_FULL,', DOI:',DI))
+    mutate(SR_TOS = paste(SR_FULL,'; DOI:',DI))
 
   }
 
   if (extension == "txt"){
-           dataframe <- bibliometrix::convert2df(file     = file,
-                                                 dbsource = "wos",
-                                                 format   = "plaintext")
+           dataframe <- bibliometrix::convert2df(file = file, dbsource = "wos", format   = "plaintext") %>%
+             mutate(SR_TOS = paste(SR_FULL,'; DOI:',DI))
   }
   data <- list(df = dataframe, ext = extension)
   return(data)
@@ -113,6 +112,7 @@ mergeDbSources2 <- function(L,remove.duplicated=TRUE){
     cat("\n",sum(d),"duplicated documents have been removed\n")
     M=M[!d,]
   }
+  M <- bibliometrix::metaTagExtraction(M, Field = "AU_CO", sep = ";")
   return(M)
 }
 

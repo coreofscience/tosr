@@ -8,7 +8,7 @@
 #'
 #' @export
 #'
-tosr <- function(..., layout = "layout_with_fr"){
+tosr <- function(...){
 
   files = c(...)
   df    = tosr_load(files)
