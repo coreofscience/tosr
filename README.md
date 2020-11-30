@@ -12,12 +12,16 @@ remotes::install_github("https://github.com/coreofscience/tosr" , dependencies =
 
 # Ejemplo
 library(tosr)
-tosinfo <- tosr('save.txt', 'scopus.bib', 'scopus1.bib')
+tosinfo <- tosr('scopus.bib', 'scopus1.bib')
 
 bibliometrix_df <- tosinfo$bibliometrix_df
 grafo           <- tosinfo$graph
 tos.subfields   <- tosinfo$ToS_subfields
 cited_ref       <- tosinfo$cited_references
+
+tosr_bibliometix_analysis(bibliometrix_df)
+
+tosr_wordcloud(cited_ref, tos.subfields, subfield = 3)
 
 # **Analisis bibliometrico**
 tosr_bibliometix_analysis(bibliometrix_df)
