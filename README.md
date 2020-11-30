@@ -11,25 +11,25 @@ Para instalar el paquete de tosr en el Rstudio cloud se copia la siguiente instr
 remotes::install_github("https://github.com/coreofscience/tosr" , dependencies = TRUE)
 
 # Ejemplo
-library(tosr)
-tosinfo <- tosr('scopus.bib', 'scopus1.bib')
+1. library(tosr)
+2. tosinfo <- tosr('scopus.bib', 'scopus1.bib')
 
-bibliometrix_df <- tosinfo$bibliometrix_df
-grafo           <- tosinfo$graph
-tos.subfields   <- tosinfo$ToS_subfields
-cited_ref       <- tosinfo$cited_references
+3. bibliometrix_df <- tosinfo$bibliometrix_df
+4. grafo           <- tosinfo$graph
+5. tos.subfields   <- tosinfo$ToS_subfields
+6. cited_ref       <- tosinfo$cited_references
 
-tosr_bibliometix_analysis(bibliometrix_df)
+7. tosr_bibliometix_analysis(bibliometrix_df)
 
-tosr_wordcloud(cited_ref, tos.subfields, subfield = 3)
+8. tosr_wordcloud(cited_ref, tos.subfields, subfield = 3)
 
 # **Analisis bibliometrico**
 tosr_bibliometix_analysis(bibliometrix_df)
 
 # **Wordcloud**
-tosr_wordcloud(cited_ref, tos.subfields, subfield = 1) 
-tosr_wordcloud(cited_ref, tos.subfields, subfield = 2)
-tosr_wordcloud(cited_ref, tos.subfields, subfield = 3)
+1. tosr_wordcloud(cited_ref, tos.subfields, subfield = 1) 
+2. tosr_wordcloud(cited_ref, tos.subfields, subfield = 2)
+3. tosr_wordcloud(cited_ref, tos.subfields, subfield = 3)
 
 # Referencias
 1. https://revistas.unal.edu.co/index.php/ingeinv/article/view/77718/0
