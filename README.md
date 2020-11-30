@@ -23,7 +23,9 @@ cited_ref       <- tosinfo$cited_references
 tosr_bibliometix_analysis(bibliometrix_df)
 
 # **Wordcloud**
-tosr_wordcloud(cited_ref, tos.subfields, subfield = 1)
+tosr_wordcloud(cited_ref, tos.subfields, subfield = 1) 
+tosr_wordcloud(cited_ref, tos.subfields, subfield = 2)
+tosr_wordcloud(cited_ref, tos.subfields, subfield = 3)
 
 # Referencias
 1. https://revistas.unal.edu.co/index.php/ingeinv/article/view/77718/0
