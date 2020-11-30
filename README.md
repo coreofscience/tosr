@@ -27,3 +27,4 @@ remotes::install_github("https://github.com/coreofscience/tosr" , dependencies =
 # Referencias
 1. https://revistas.unal.edu.co/index.php/ingeinv/article/view/77718/0
 2. https://rdrr.io/cran/remotes/man/install_git.html
+2. https://www.bibliometrix.org/
