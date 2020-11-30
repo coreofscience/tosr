@@ -11,18 +11,19 @@ Para instalar el paquete de tosr en el Rstudio cloud se copia la siguiente instr
 remotes::install_github("https://github.com/coreofscience/tosr" , dependencies = TRUE)
 
 # Ejemplo
-**library(tosr)**                                  # Se carga la libreria 
+library(tosr)
+tosinfo <- tosr('save.txt', 'scopus.bib', 'scopus1.bib')
 
+bibliometrix_df <- tosinfo$bibliometrix_df
+grafo           <- tosinfo$graph
+tos.subfields   <- tosinfo$ToS_subfields
+cited_ref       <- tosinfo$cited_references
 
-**tosinfo <- tosr('save.txt','scopus.bib')**     # se llama la funcion tosr (se cargan los archivos que se desean procesar al Rstudio cloud)
+# **Analisis bibliometrico**
+tosr_bibliometix_analysis(bibliometrix_df)
 
-**bibliometrix_df <- tosinfo$bibliometrix_df**   # Bibliometrix data frame 
-
-
-**grafo           <- tosinfo$graph**             # Grafo con las subareas 
-
-
-**tos.subfields   <- tosinfo$ToS_subfields**     # Dataframe con el 'Tree of science' para las tres subareas mas grandes  
+# **Wordcloud**
+tosr_wordcloud(cited_ref, tos.subfields, subfield = 1)
 
 # Referencias
 1. https://revistas.unal.edu.co/index.php/ingeinv/article/view/77718/0
