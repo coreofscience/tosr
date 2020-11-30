@@ -32,4 +32,5 @@ tosr_bibliometix_analysis <- function(df){
   #               weighted=T, n = 30,
   #               Title = "Keyword Co-occurrences",
   #               type = "fruchterman", size=T,edgesize = 5,labelsize=0.7)
+  return(S)
 }
