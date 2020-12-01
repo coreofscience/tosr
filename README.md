@@ -18,22 +18,19 @@ library(tosr)
 tosinfo <- tosr('scopus.bib','save.txt')
 
 # Tos information
-tos.df      <- tosinfo$bibliometrix_df    # Bibliometrix dataframe
-tos.g       <- tosinfo$graph              # Graph
-tos.tos_sub <- tosinfo$ToS_subfields      # Tree of science subfields
-tos.cited   <- tosinfo$cited_references   # Cited references
-tos.sap     <- tosinfo$TOs_sap            # Tree of science 
+- tos.df      <- tosinfo$bibliometrix_df    # Bibliometrix dataframe
+- tos.g       <- tosinfo$graph              # Graph
+- tos.tos_sub <- tosinfo$ToS_subfields      # Tree of science subfields
+- tos.cited   <- tosinfo$cited_references   # Cited references
+- tos.sap     <- tosinfo$TOs_sap            # Tree of science 
 
-# Analisis bibliometrico 
-tosr_bibliometix_analysis(tos.df)
 
 # **Analisis bibliometrico**
 tosr_bibliometix_analysis(tos.df)
 
-# **Wordcloud**
 # Wordcloud (funciona para archivos .bib)
-words_remove <- c('the','and','active','for','with','using')
-tosr_wordcloud(tos.cited, tos.tos_sub, subfield = 2, words_remove = words_remove)
+- words_remove <- c('the','and','active','for','with','using')
+- tosr_wordcloud(tos.cited, tos.tos_sub, subfield = 2, words_remove = words_remove)
 
 # **Para actualizar**
 remotes::update_packages("tosr" , dependencies = TRUE)
