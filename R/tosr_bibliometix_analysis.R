@@ -18,15 +18,15 @@ tosr_bibliometix_analysis <- function(df){
   NetMatrix <- biblioNetwork(M, analysis = "collaboration", network = "countries", sep = ";")
 
   # Plot the network
-  net=networkPlot(NetMatrix,
-                  n = dim(NetMatrix)[1],
-                  Title = "Country Collaboration",
-                  type = "circle", size=TRUE,
-                  remove.multiple=FALSE,
-                  labelsize=0.7,cluster="none")
+  #net=networkPlot(NetMatrix,
+  #                n = dim(NetMatrix)[1],
+  #                Title = "Country Collaboration",
+  #               type = "circle", size=TRUE,
+  #               remove.multiple=FALSE,
+   #              labelsize=0.7,cluster="none")
 
   # Plot the network
-  NetMatrix <- biblioNetwork(M, analysis = "co-occurrences", network = "keywords", sep = ";")
+  #NetMatrix <- biblioNetwork(M, analysis = "co-occurrences", network = "keywords", sep = ";")
   #net=networkPlot(NetMatrix,
   #                normalize="association",
   #                weighted=T, n = 30,
