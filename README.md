@@ -11,21 +11,29 @@ Para instalar el paquete de tosr en el Rstudio cloud se copia la siguiente instr
 remotes::install_github("https://github.com/coreofscience/tosr" , dependencies = TRUE)
 
 # Ejemplo
-1. library(tosr)
-2. tosinfo <- tosr('scopus.bib')
 
-3. tos.df      <- tosinfo$bibliometrix_df
-4. tos.g       <- tosinfo$graph
-5. tos.tos_sub <- tosinfo$ToS_subfields
-6. tos.cited   <- tosinfo$cited_references
+library(tosr)
+
+# Tos process
+tosinfo <- tosr('scopus.bib','save.txt')
+
+# Tos information
+tos.df      <- tosinfo$bibliometrix_df    # Bibliometrix dataframe
+tos.g       <- tosinfo$graph              # Graph
+tos.tos_sub <- tosinfo$ToS_subfields      # Tree of science subfields
+tos.cited   <- tosinfo$cited_references   # Cited references
+tos.sap     <- tosinfo$TOs_sap            # Tree of science 
+
+# Analisis bibliometrico 
+tosr_bibliometix_analysis(tos.df)
 
 # **Analisis bibliometrico**
 tosr_bibliometix_analysis(tos.df)
 
 # **Wordcloud**
-1. tosr_wordcloud(tos.cited, tos.tos_sub, subfield = 1) 
-2. tosr_wordcloud(tos.cited, tos.tos_sub, subfield = 2)
-3. tosr_wordcloud(tos.cited, tos.tos_sub, subfield = 3)
+# Wordcloud (funciona para archivos .bib)
+words_remove <- c('the','and','active','for','with','using')
+tosr_wordcloud(tos.cited, tos.tos_sub, subfield = 2, words_remove = words_remove)
 
 # **Para actualizar**
 remotes::update_packages("tosr" , dependencies = TRUE)
