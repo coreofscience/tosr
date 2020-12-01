@@ -27,6 +27,9 @@ tosr_bibliometix_analysis(tos.df)
 2. tosr_wordcloud(tos.cited, tos.tos_sub, subfield = 2)
 3. tosr_wordcloud(tos.cited, tos.tos_sub, subfield = 3)
 
+# **Para actualizar**
+remotes::update_packages("https://github.com/coreofscience/tosr" , dependencies = TRUE)
+
 # Referencias
 1. https://revistas.unal.edu.co/index.php/ingeinv/article/view/77718/0
 2. https://rdrr.io/cran/remotes/man/install_git.html
