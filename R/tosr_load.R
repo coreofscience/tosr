@@ -57,7 +57,8 @@ tosload_aux <- function(file){
                                     "," %R% SPC %R%
                                     one_or_more(DGT) %R% ","),
              SR_TOS = str_c(SR_TOS, " ", SO)) %>%
-      mutate(ID_TOS = str_extract(SR, ".*,"))
+      mutate(ID_TOS = str_extract(SR, ".*,"),
+             ref_type = 'scopus')
     grafo <- grafo.bib(scopus_dataframe)
 
     return(list(df = scopus_dataframe,
@@ -67,7 +68,8 @@ tosload_aux <- function(file){
 
   if (extension == "txt"){
     data_wos <- bibliometrix::convert2df(file = file, dbsource = "wos", format   = "plaintext")%>%
-                mutate(ID_TOS = str_extract(SR, ".*,"))
+                mutate(ID_TOS   = str_extract(SR, ".*,"),
+                       ref_type = 'wos')
     grafo <- grafo.txt(data_wos)
     cited_ref <- tosr.cited_ref(data_wos)
     return(list(df = data_wos,

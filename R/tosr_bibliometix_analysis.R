@@ -14,16 +14,16 @@ tosr_bibliometix_analysis <- function(df){
   S       <- summary(object = results, k = 10, pause = FALSE)
   plot(x = results, k = 10, pause = FALSE)
 
-  M <- metaTagExtraction(df, Field = "AU_CO", sep = ";")
-  NetMatrix <- biblioNetwork(M, analysis = "collaboration", network = "countries", sep = ";")
+  #M <- metaTagExtraction(df, Field = "AU_CO", sep = ";")
+  #NetMatrix <- biblioNetwork(M, analysis = "collaboration", network = "countries", sep = ";")
 
   # Plot the network
   #net=networkPlot(NetMatrix,
   #                n = dim(NetMatrix)[1],
   #                Title = "Country Collaboration",
-  #               type = "circle", size=TRUE,
-  #               remove.multiple=FALSE,
-   #              labelsize=0.7,cluster="none")
+  #                type = "circle", size=TRUE,
+  #                remove.multiple=FALSE,
+  #                labelsize=0.7,cluster="none")
 
   # Plot the network
   #NetMatrix <- biblioNetwork(M, analysis = "co-occurrences", network = "keywords", sep = ";")
@@ -32,5 +32,13 @@ tosr_bibliometix_analysis <- function(df){
   #                weighted=T, n = 30,
   #                Title = "Keyword Co-occurrences",
   #                type = "fruchterman", size=T,edgesize = 5,labelsize=0.7)
-  return(list(summary = S, co_ocurrences = NetMatrix))
+
+  over_time <- df %>%
+    group_by(ref_type,PY) %>%
+    count()
+
+  ggplot(data = over_time, mapping = aes(x=PY, y=n, color = ref_type)) +
+    geom_line()+
+    geom_point() +
+    labs(title="Publications per year", x ="Year", y = "Frecuency")
 }
