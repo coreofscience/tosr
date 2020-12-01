@@ -19,18 +19,13 @@ remotes::install_github("https://github.com/coreofscience/tosr" , dependencies =
 5. tos.tos_sub <- tosinfo$ToS_subfields
 6. tos.cited   <- tosinfo$cited_references
 
-
-7. tosr_wordcloud(tos.cited, tos.tos_sub, subfield = 2)
-8. tosr_bibliometix_analysis(tos.df)
-
-
 # **Analisis bibliometrico**
-tosr_bibliometix_analysis(bibliometrix_df)
+tosr_bibliometix_analysis(tos.df)
 
 # **Wordcloud**
-1. tosr_wordcloud(cited_ref, tos.subfields, subfield = 1) 
-2. tosr_wordcloud(cited_ref, tos.subfields, subfield = 2)
-3. tosr_wordcloud(cited_ref, tos.subfields, subfield = 3)
+1. tosr_wordcloud(tos.cited, tos.tos_sub, subfield = 1) 
+2. tosr_wordcloud(tos.cited, tos.tos_sub, subfield = 2)
+3. tosr_wordcloud(tos.cited, tos.tos_sub, subfield = 3)
 
 # Referencias
 1. https://revistas.unal.edu.co/index.php/ingeinv/article/view/77718/0
