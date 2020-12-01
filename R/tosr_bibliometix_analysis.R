@@ -26,11 +26,10 @@ tosr_bibliometix_analysis <- function(df){
                   labelsize=0.7,cluster="none")
 
   # Plot the network
-  #NetMatrix <- biblioNetwork(M, analysis = "co-occurrences", network = "keywords", sep = ";")
-  #net=networkPlot(NetMatrix,
-  #               normalize="association",
-  #               weighted=T, n = 30,
-  #               Title = "Keyword Co-occurrences",
-  #               type = "fruchterman", size=T,edgesize = 5,labelsize=0.7)
-  return(S)
+  NetMatrix <- biblioNetwork(M, analysis = "co-occurrences", network = "keywords", sep = ";")
+  net=networkPlot(NetMatrix,
+                  normalize="association",
+                  weighted=T, n = 30,
+                  Title = "Keyword Co-occurrences",
+                  type = "fruchterman", size=T,edgesize = 5,labelsize=0.7)
 }

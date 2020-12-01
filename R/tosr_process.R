@@ -12,8 +12,8 @@
 #' @export
 #'
 
-tosr_process <- function(g) {
-  subfields <- table(get.vertex.attribute(g,'sub_field'))
+tosr_process <- function(g, df, nodes) {
+  subfields <- table(get.vertex.attribute(g,'subfield'))
   subfields <- as.data.frame(subfields) %>%
     arrange(desc(Freq))
 
@@ -21,8 +21,9 @@ tosr_process <- function(g) {
     id        = V(g)$name,
     indegree  = degree(g, mode = "in"),
     outdegree = degree(g, mode = "out"),
-    bet       = betweenness(g),
-    subfield  = V(g)$sub_field)
+    subfield  = V(g)$subfield)
+
+
   metricas <- metricas %>%
     mutate(year = as.numeric(str_extract(id, "[0-9]{4}")))
   metricas$SAP <- NA
@@ -30,18 +31,48 @@ tosr_process <- function(g) {
   metricas1 <- metricas %>% filter(subfield == subfields$Var1[1])
   tos1 <- TOS.process(metricas, metricas1, g)
   tos1$subfield <- 1
+  tos1$subfield_graph <- subfields$Var1[1]
 
-  metricas2 <- metricas %>% filter(subfield == subfields$Var1[2])
-  tos2 <- TOS.process(metricas, metricas2, g)
-  tos2$subfield <- 2
+  TOSi <- tos1
 
-  metricas3 <- metricas %>% filter(subfield == subfields$Var1[3])
-  tos3 <- TOS.process(metricas, metricas3, g)
-  tos3$subfield <- 3
+  n <- 10
+  if (length(subfields$Var1) <= 10){
+    n <- length(subfields$Var1)
+  }
+
+  for (i in seq(2,n)){
+    metricasi <- metricas %>% filter(subfield == subfields$Var1[i])
+    if (length(metricasi$id) <= 30){
+      break
+    }
+    tosi <- TOS.process(metricas, metricasi, g)
+    tosi$subfield <- i
+    tosi$subfield_graph <- subfields$Var1[i]
+    TOSi <-rbind(TOSi, tosi)
+  }
+
+  TOSi$id       <- gsub(" ","",TOSi$id)
+  nodes$ID_TOS <- gsub(" ","",nodes$ID_TOS)
+  df$ID_TOS    <- gsub(" ","",df$ID_TOS)
+
+  TOSi$cite <- NA
+
+  for (i in seq(length(TOSi$id))){
+    aux <- nodes$CITE[nodes$ID_TOS %in% TOSi$id[i]]
+
+    if (length(aux) == 0){
+      aux <- df$SR_FULL[df$ID_TOS %in% TOSi$id[i]]
+      TOSi$cite[i] <- aux[[1]]
+    }
+
+    if (length(aux) > 0){
+      TOSi$cite[i] <- aux[[1]]
+    }
+
+  }
 
 
-  tos      <- rbind(tos1, tos2, tos3)
-  return(tos)
+  return(TOSi)
 
 }
 

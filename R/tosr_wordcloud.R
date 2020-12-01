@@ -10,7 +10,7 @@
 #
 
 tosr_wordcloud <- function(df_ref, tos, subfield = 1){
-  titles1 <- df_ref$CR_TITLE[df_ref$CR_SO %in% tos$id[tos$subfield == subfield]]
+  titles1 <- df_ref$CR_TITLE[df_ref$ID_TOS %in% tos$id[tos$subfield == subfield]]
   titles1 <- titles1[!is.na(titles1)]
   dtmf1   <- tosr.corpus(titles1)
   wordcloud2(dtmf1)

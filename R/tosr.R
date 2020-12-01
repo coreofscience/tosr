@@ -11,12 +11,18 @@
 tosr <- function(...){
 
   df    <- tosr_load(...)
-  cited_references <- tosr.cited_ref(df)
-  g1    <- tosr_graph(df)
-  ToS   <- tosr_process(g1)
-  ToS.info <- list(bibliometrix_df = df,
-               graph              = g1,
-               ToS_subfields      = ToS,
-               cited_references   = cited_references)
+  g     <- df$graph
+  nodes <- df$nodes
+
+  df1    <- df$df
+  TOS    <- tosSAP(g,df1,nodes)
+  TOSi   <- tosr_process(g,df1,nodes)
+
+
+  ToS.info <- list(bibliometrix_df = df1,
+               graph               = g,
+               ToS_subfields       = TOSi,
+               TOs_sap             = TOS,
+               cited_references    = tosr.cited_ref(df1))
   return(ToS.info)
 }
