@@ -12,7 +12,7 @@
 #' @export
 #'
 
-tosr_process <- function(g, df, nodes) {
+tosr_process <- function(g, df, nodes, number_nodes) {
   subfields <- table(get.vertex.attribute(g,'subfield'))
   subfields <- as.data.frame(subfields) %>%
     arrange(desc(Freq))
@@ -42,7 +42,7 @@ tosr_process <- function(g, df, nodes) {
 
   for (i in seq(2,n)){
     metricasi <- metricas %>% filter(subfield == subfields$Var1[i])
-    if (length(metricasi$id) <= 30){
+    if (length(metricasi$id) <= number_nodes){
       break
     }
     tosi <- TOS.process(metricas, metricasi, g)
