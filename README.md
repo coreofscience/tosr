@@ -23,7 +23,7 @@ remotes::install_github("https://github.com/coreofscience/tosr" , dependencies =
 
 
 # **Analisis bibliometrico**
-tosr_bibliometix_analysis(tos.df)
+Summary <- tosr_bibliometix_analysis(tos.df)
 
 # Wordcloud (funciona para archivos .bib)
 - words_remove <- c('the','and','active','for','with','using')
