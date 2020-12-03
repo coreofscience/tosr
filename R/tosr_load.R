@@ -13,6 +13,7 @@
 tosr_load <- function(...){
 
   file <- list(...)
+  extensions <- unique(unlist(lapply(file, get.extension)))
 
   if (length(file) == 1){
     print('1')
@@ -26,20 +27,31 @@ tosr_load <- function(...){
     M <- mergeDbSources2(d)%>%
       mutate(ID_TOS = str_extract(SR, ".*,"))
 
-    df_wos <-
-      M %>%
-      dplyr::filter(!grepl("\\(([0-9]{4})\\)",
-                           M$CR)) %>%
-      mutate(ref_type = "wos")
+    if (length(extensions) > 1){
+      df_wos <-
+        M %>%
+        dplyr::filter(!grepl("\\(([0-9]{4})\\)",
+                             M$CR)) %>%
+        mutate(ref_type = "wos")
 
-    df_scopus <-
-      M %>%
-      dplyr::filter(grepl("\\(([0-9]{4})\\)",
-                          M$CR)) %>%
-      mutate(ref_type = "scopus")
+      df_scopus <-
+        M %>%
+        dplyr::filter(grepl("\\(([0-9]{4})\\)",
+                            M$CR)) %>%
+        mutate(ref_type = "scopus")
 
       M <- bind_rows(df_wos, df_scopus)
+    }
 
+    if (length(extensions) == 1) {
+      if (extensions == 'bib') {
+        M <- M %>%
+          mutate(ref_type = "scopus")
+      } else {
+        M <- M %>%
+          mutate(ref_type = "wos")
+      }
+    }
     grafo <- grafo_combinado(M)
     cited_ref <- tosr.cited_ref(M)
     return(list(df=M, graph=grafo$graph, nodes = grafo$nodes))
@@ -430,7 +442,7 @@ tosr.cited_ref <- function(df){
   cited_references <-
     df %>%
     separate_rows(CR, sep = ";") %>%
-    select(SR_TOS, CR, SR) %>%
+    select(SR_TOS, CR, SR, ref_type) %>%
     mutate(CR_AUTHOR = str_remove(CR, pattern_authors),
            CR_TITLE_1 = str_extract(CR, pattern_authors),
            CR_TITLE = str_remove(CR_TITLE_1, pattern_titles),
@@ -453,7 +465,8 @@ tosr.cited_ref <- function(df){
            CR_JOURNAL,
            CR_VOLUME,
            CR_PAGES,
-           ID_TOS) %>%
+           ID_TOS,
+           ref_type) %>%
     mutate(lastname = sub("\\., .*", "", CR),
            lastname = sub(",", "", lastname),
            lastname = sub("\\.", "", lastname),

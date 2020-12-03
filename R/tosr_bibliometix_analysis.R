@@ -12,8 +12,18 @@
 tosr_bibliometix_analysis <- function(df){
   results <- biblioAnalysis(df, sep = ";")
   S       <- summary(object = results, k = 10, pause = FALSE)
-  plot(x = results, k = 10, pause = FALSE)
 
+  over_time <- df %>%
+    group_by(ref_type,PY) %>%
+    count()
+
+  plt <- ggplot(data = over_time, mapping = aes(x=PY, y=n, color = ref_type)) +
+    geom_line()+
+    geom_point() +
+    labs(title="Publications per year", x ="Year", y = "Frecuency")
+
+  plot(x = results, k = 10, pause = FALSE)
+  print(plt)
   #M <- metaTagExtraction(df, Field = "AU_CO", sep = ";")
   #NetMatrix <- biblioNetwork(M, analysis = "collaboration", network = "countries", sep = ";")
 
@@ -33,12 +43,6 @@ tosr_bibliometix_analysis <- function(df){
   #                Title = "Keyword Co-occurrences",
   #                type = "fruchterman", size=T,edgesize = 5,labelsize=0.7)
 
-  over_time <- df %>%
-    group_by(ref_type,PY) %>%
-    count()
 
-  ggplot(data = over_time, mapping = aes(x=PY, y=n, color = ref_type)) +
-    geom_line()+
-    geom_point() +
-    labs(title="Publications per year", x ="Year", y = "Frecuency")
+  return(list(summary = S))
 }

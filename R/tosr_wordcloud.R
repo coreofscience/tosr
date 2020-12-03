@@ -24,7 +24,7 @@ tosr.corpus <- function(titles){
   corp       <- tm_map(corp, removeWords, stopwords("spanish"))
   corp       <- tm_map(corp, removeWords, stopwords("english"))
   corp       <- tm_map(corp, removeNumbers)
-  corp       <- tm_map(corp, stemDocument, language = "spanish")
+  #corp       <- tm_map(corp, stemDocument, language = "spanish")
   removeAccents <- content_transformer(function(x) chartr("áéíóú", "aeiou", x))
   corp       <- tm_map(corp, removeAccents)
 
