@@ -13,7 +13,7 @@
 tosr_load <- function(...){
 
   file <- list(...)
-  extensions <- unique(unlist(lapply(file, get.extension)))
+  extensions <- unlist(lapply(file, get.extension))
 
   if (length(file) == 1){
     print('1')
@@ -24,14 +24,20 @@ tosr_load <- function(...){
   if (length(file) > 1){
     print(length(file))
     d <- lapply(file, tosload_aux2)
+    original_df <- mergeDbSources2(d,remove.duplicated=FALSE)
     M <- mergeDbSources2(d)%>%
       mutate(ID_TOS = str_extract(SR, ".*,"))
 
-    if (length(extensions) > 1){
+    if (length(unique(extensions)) > 1){
       df_wos <-
         M %>%
         dplyr::filter(!grepl("\\(([0-9]{4})\\)",
                              M$CR)) %>%
+        mutate(ref_type = "wos")
+      df_wos2 <-
+        original_df %>%
+        dplyr::filter(!grepl("\\(([0-9]{4})\\)",
+                             original_df$CR)) %>%
         mutate(ref_type = "wos")
 
       df_scopus <-
@@ -39,11 +45,17 @@ tosr_load <- function(...){
         dplyr::filter(grepl("\\(([0-9]{4})\\)",
                             M$CR)) %>%
         mutate(ref_type = "scopus")
+      df_scopus2 <-
+        original_df %>%
+        dplyr::filter(grepl("\\(([0-9]{4})\\)",
+                            original_df$CR)) %>%
+        mutate(ref_type = "scopus")
 
       M <- bind_rows(df_wos, df_scopus)
+      original_df <- bind_rows(df_wos2, df_scopus2)
     }
 
-    if (length(extensions) == 1) {
+    if (length(unique(extensions)) == 1) {
       if (extensions == 'bib') {
         M <- M %>%
           mutate(ref_type = "scopus")
@@ -53,8 +65,12 @@ tosr_load <- function(...){
       }
     }
     grafo <- grafo_combinado(M)
-    cited_ref <- tosr.cited_ref(M)
-    return(list(df=M, graph=grafo$graph, nodes = grafo$nodes))
+    #cited_ref <- tosr.cited_ref(M)
+    return(list(df=M,
+                graph=grafo$graph,
+                nodes = grafo$nodes,
+                original_df = original_df,
+                extensiones = extensions))
   }
 }
 
