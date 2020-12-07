@@ -15,11 +15,12 @@ remotes::install_github("https://github.com/coreofscience/tosr" , dependencies =
 - tosinfo <- tosr('scopus.bib','save.txt')  # Tos process
 
 # Tos information
-- tos.df      <- tosinfo$bibliometrix_df    # Bibliometrix dataframe
-- tos.g       <- tosinfo$graph              # Graph
-- tos.tos_sub <- tosinfo$ToS_subfields      # Tree of science subfields
-- tos.cited   <- tosinfo$cited_references   # Cited references
-- tos.sap     <- tosinfo$TOs_sap            # Tree of science 
+- tos.df         <- tosinfo$bibliometrix_df    # Bibliometrix dataframe
+- tos.g          <- tosinfo$graph              # Graph
+- tos.tos_sub    <- tosinfo$ToS_subfields      # Tree of science subfields
+- tos.cited      <- tosinfo$cited_references   # Cited references
+- tos.sap        <- tosinfo$TOs_sap            # Tree of science 
+- complete_cites <- tosinfo$Tos_comple_table   # Complete cites 
 
 
 # **Analisis bibliometrico**
