@@ -28,7 +28,8 @@ tosr_load <- function(...){
     M <- mergeDbSources2(d)%>%
       mutate(ID_TOS = str_extract(SR, ".*,"))
 
-    if (length(unique(extensions)) > 1){
+    extension_unica <-unique(extensions)
+    if (length(extension_unica) > 1){
       df_wos <-
         M %>%
         dplyr::filter(!grepl("\\(([0-9]{4})\\)",
@@ -55,8 +56,8 @@ tosr_load <- function(...){
       original_df <- bind_rows(df_wos2, df_scopus2)
     }
 
-    if (length(unique(extensions)) == 1) {
-      if (extensions == 'bib') {
+    if (length(extension_unica) == 1) {
+      if (extension_unica == 'bib') {
         M <- M %>%
           mutate(ref_type = "scopus")
       } else {

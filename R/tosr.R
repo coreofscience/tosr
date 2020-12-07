@@ -39,14 +39,56 @@ tosr <- function(...){
                        return(NULL)
                      })
 
+  TOSi   <- tryCatch(tosr_process(g,df1,nodes, number_nodes),
+                     error=function(cond) {
+                       message('Error en Tos Proces subfields, cambiar numero de nodos')
+                       return(NA)
+                     },
+                     warning=function(cond) {
+                       message("Warning en TOS subfields")
+                       return(NULL)
+                     })
+
+  tabla_completa_TOS   <- tabla_completa(g,TOSi,nodes)
+
+
   ToS.info <- list(bibliometrix_df = df1,
                graph               = g,
                ToS_subfields       = TOSi,
+               Tos_comple_table    = tabla_completa_TOS,
                TOs_sap             = TOS,
-               cited_references    = tosr.cited_ref(df1))
+               cited_references    = tosr.cited_ref(df1),
+               nodes_atributes     = nodes)
   return(ToS.info)
 }
 
 
+tabla_completa <- function(g,TOSi,nodes){
+  tabla_completa_TOS <- data.frame(names = V(g)$name)
+  tabla_completa_TOS$subfield <- V(g)$subfield
+  tabla_completa_TOS$names <- gsub(" ","",tabla_completa_TOS$names)
+  tabla_completa_TOS$TOS  <- NA
+  tabla_completa_TOS$Cite <- NA
+  tabla_completa_TOS$doi  <- NA
 
+  tabla_completa_TOS$TOS[(tabla_completa_TOS$names %in% TOSi$id)] <- TOSi$TOS[!duplicated(TOSi$id)]
+
+  nodes$ID_TOS <- gsub(" ","",nodes$ID_TOS)
+
+
+  for (i in seq(length(tabla_completa_TOS$names))){
+    aux <- nodes$CITE[nodes$ID_TOS %in% tabla_completa_TOS$names[i]]
+
+    if (length(aux) > 0){
+      tabla_completa_TOS$Cite[i] <- aux[[1]]
+    }
+
+  }
+
+  doi_regex <- "10.\\d{4,9}/[-._;()/:a-z0-9A-Z]+"
+  tabla_completa_TOS <- tabla_completa_TOS %>%
+    mutate(doi = str_extract(tabla_completa_TOS$Cite, doi_regex)) %>%
+    mutate(doi = ifelse(is.na(doi),NA,paste0("https://doi.org/",doi)))
+  return(tabla_completa_TOS)
+}
 
