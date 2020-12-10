@@ -12,7 +12,7 @@ remotes::install_github("https://github.com/coreofscience/tosr" , dependencies =
 
 # **Ejemplo**
 - library(tosr)                             # Se carga libreria 
-- tosinfo <- tosr('scopus.bib','save.txt')  # Tos process
+- tosinfo <- tosR('scopus.bib','save.txt')  # Tos process
 
 # Informacion calculada y 'Tree of science'
 - tos.df         <- tosinfo$bibliometrix_df    # Bibliometrix dataframe
