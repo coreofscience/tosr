@@ -2,21 +2,26 @@
 % Please edit documentation in R/tosr_load.R
 \name{tosr_load}
 \alias{tosr_load}
-\title{Loading .bib files}
+\title{tosr_load}
 \usage{
-tosload(file = name of file)
+data_info <- tosload('scopus.bib','save.txt')
 }
 \arguments{
-\item{file.bib}{the .bib file to be converted}
+\item{...}{Names of scopus and web of science files}
 }
 \value{
-dataframe with all variables in columns
+List with the following fields: 'df','g','original_df' and 'extensions'.
+        'df': bibliometrix dataframe.
+        'g' : Graphf from the cited references.
+     'nodes': dataframe with the nodes atributes of the graph,
+'original_df': dataframe from the original data, and
+'extensions' : Type of files (.bib or .txt) loaded.
 }
 \description{
-load .bib file and convert it to data frame with scupos information
+Loading  files from scopus (.bib) and Web of science (.txt)
 }
 \examples{
-library(treeofscience)
+library(tosr)
           file         <- "scopus.bib"
           socopus_df   <- tosload(file) # Create scopus data frame
 }

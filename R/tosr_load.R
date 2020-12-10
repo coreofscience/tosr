@@ -1,11 +1,16 @@
 #' @name  tosr_load
-#' @title Loading .bib files
-#' @description load .bib file and convert it to data frame with scupos information
-#' @param file.bib the .bib file to be converted
+#' @title tosr_load
+#' @description Loading  files from scopus (.bib) and Web of science (.txt)
+#' @param ... Names of scopus and web of science files
 #' @author Sebastian Robledo
-#' @usage tosload(file = name of file)
-#' @return dataframe with all variables in columns
-#' @examples library(treeofscience)
+#' @usage data_info <- tosload('scopus.bib','save.txt')
+#' @return List with the following fields: 'df','g','original_df' and 'extensions'.
+#'         'df': bibliometrix dataframe.
+#'         'g' : Graphf from the cited references.
+#'      'nodes': dataframe with the nodes atributes of the graph,
+#''original_df': dataframe from the original data, and
+#''extensions' : Type of files (.bib or .txt) loaded.
+#' @examples library(tosr)
 #'           file         <- "scopus.bib"
 #'           socopus_df   <- tosload(file) # Create scopus data frame
 #' @export

@@ -2,18 +2,24 @@
 % Please edit documentation in R/tosr_bibliometix_analysis.R
 \name{tosr_bibliometix_analysis}
 \alias{tosr_bibliometix_analysis}
-\title{bibliometric analysis}
+\title{Bibliometric analysis}
 \usage{
-tosr(df)
+tosr_bibliometix_analysis(df)
 }
 \arguments{
-\item{bibliometrix_objetc}{a bibliometix objetc}
+\item{df}{A bibliometix objetc}
 }
 \value{
 bibliometrix analysis plots
 }
 \description{
-Compute the bibliometric analysis using bibliometrix library
+Bibliometric analysis using bibliometrix library
+}
+\examples{
+library(tosr)
+tosinfo <- tosR('scopus.bib','save.txt') # Tos process
+Summary <- tosr_bibliometix_analysis(tosinfo.df)
+
 }
 \author{
 Sebastian Robledo

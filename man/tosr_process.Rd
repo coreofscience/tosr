@@ -2,24 +2,32 @@
 % Please edit documentation in R/tosr_process.R
 \name{tosr_process}
 \alias{tosr_process}
-\title{Creating our ToS}
+\title{Tree of science for subfields}
 \usage{
-tosprocess(graph)
+TOS_subfields <- tosr_process(g, df, nodes, number_nodes)
 }
 \arguments{
-\item{graph}{a graph object with scopus data}
+\item{graph}{Graph object with bibliometrix data obtained from function tosr_load}
+
+\item{df}{Bibliometrix data frame obtained from function tosr_load}
+
+\item{nodes}{Dataframe with nodes atributes obtained from function tosr_load}
+
+\item{number_nodes}{Scalar number for minimum number of nodes to be considered in the subfield}
 }
 \value{
-a dataframe with the Tree of science
+Dataframe with the Tree of science for subfields
 }
 \description{
 Convert a graph object into the tree of science
 }
 \examples{
-library(treeofscience)
-          socopus_df <- tosload("scopus.bib") # Create scopus data frame
-          graph.scopus <- tosgraph(scopus_df) # Create graph from scopus data frame
-          TOS <- tosprocess(graph.scopus)     # Create Tree of Science
+library(tosr)
+data_info     <- tosload("scopus.bib") # Create scopus data frame
+TOS_subfields <- tosr_process(g  = data_info$g,
+                              df = data_info$df,
+                           nodes = data_info$nodes,
+                    number_nodes = 50)
 }
 \author{
 Sebastian Robledo

@@ -1,27 +1,32 @@
 #' @name  tosr_process
-#' @title Creating our ToS
+#' @title Tree of science for subfields
 #' @description Convert a graph object into the tree of science
-#' @param graph a graph object with scopus data
-#' @usage tosprocess(graph)
+#' @param graph Graph object with bibliometrix data obtained from function tosr_load
+#' @param df Bibliometrix data frame obtained from function tosr_load
+#' @param nodes Dataframe with nodes atributes obtained from function tosr_load
+#' @param number_nodes Scalar number for minimum number of nodes to be considered in the subfield
+#' @usage TOS_subfields <- tosr_process(g, df, nodes, number_nodes)
 #' @author Sebastian Robledo
-#' @return a dataframe with the Tree of science
-#' @examples library(treeofscience)
-#'           socopus_df <- tosload("scopus.bib") # Create scopus data frame
-#'           graph.scopus <- tosgraph(scopus_df) # Create graph from scopus data frame
-#'           TOS <- tosprocess(graph.scopus)     # Create Tree of Science
+#' @return Dataframe with the Tree of science for subfields
+#' @examples library(tosr)
+#' data_info     <- tosload("scopus.bib") # Create scopus data frame
+#' TOS_subfields <- tosr_process(g  = data_info$g,
+#'                               df = data_info$df,
+#'                            nodes = data_info$nodes,
+#'                     number_nodes = 50)
 #' @export
 #'
 
-tosr_process <- function(g, df, nodes, number_nodes) {
-  subfields <- table(get.vertex.attribute(g,'subfield'))
+tosr_process <- function(graph, df, nodes, number_nodes) {
+  subfields <- table(get.vertex.attribute(graph,'subfield'))
   subfields <- as.data.frame(subfields) %>%
     arrange(desc(Freq))
 
   metricas <- dplyr::tibble(
-    id        = V(g)$name,
-    indegree  = degree(g, mode = "in"),
-    outdegree = degree(g, mode = "out"),
-    subfield  = V(g)$subfield)
+    id        = V(graph)$name,
+    indegree  = degree(graph, mode = "in"),
+    outdegree = degree(graph, mode = "out"),
+    subfield  = V(graph)$subfield)
 
 
   metricas <- metricas %>%
@@ -29,7 +34,7 @@ tosr_process <- function(g, df, nodes, number_nodes) {
   metricas$SAP <- NA
 
   metricas1 <- metricas %>% filter(subfield == subfields$Var1[1])
-  tos1 <- TOS.process(metricas, metricas1, g)
+  tos1 <- TOS.process(metricas, metricas1, graph)
   tos1$subfield <- 1
   tos1$subfield_graph <- subfields$Var1[1]
 
@@ -45,7 +50,7 @@ tosr_process <- function(g, df, nodes, number_nodes) {
     if (length(metricasi$id) <= number_nodes){
       break
     }
-    tosi <- TOS.process(metricas, metricasi, g)
+    tosi <- TOS.process(metricas, metricasi, graph)
     tosi$subfield <- i
     tosi$subfield_graph <- subfields$Var1[i]
     TOSi <-rbind(TOSi, tosi)

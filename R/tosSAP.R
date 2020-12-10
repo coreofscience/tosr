@@ -1,8 +1,11 @@
 #' @name  tosSAP
 #' @title SAP algorithm for tree of science
-#' @description Compute tree of science
-#' @param graph,bibliometrix_object,node_atributes
-#' @usage tosSAP(graph,df,nodes)
+#' @description Compute tree of science using SAP algorithm.
+#'              see: https://revistas.unal.edu.co/index.php/ingeinv/article/view/77718/0
+#' @param graph A graph object with bibliometrix data obtained from function tosr_load
+#' @param df Bibliometrix data frame obtained from function tosr_load
+#' @param nodes Dataframe with nodes atributes obtained from function tosr_load
+#' @usage TOS <- tosSAP(graph,df,nodes)
 #' @author Sebastian Robledo
 #' @return Dataframe with tree of science
 #'

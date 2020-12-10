@@ -1,10 +1,13 @@
 #' @name  tosr_bibliometix_analysis
-#' @title bibliometric analysis
-#' @description Compute the bibliometric analysis using bibliometrix library
-#' @param bibliometrix_objetc a bibliometix objetc
-#' @usage tosr(df)
+#' @title Bibliometric analysis
+#' @description Bibliometric analysis using bibliometrix library
+#' @param df A bibliometix objetc
+#' @usage tosr_bibliometix_analysis(df)
 #' @author Sebastian Robledo
 #' @return bibliometrix analysis plots
+#' @examples library(tosr)
+#' tosinfo <- tosR('scopus.bib','save.txt') # Tos process
+#' Summary <- tosr_bibliometix_analysis(tosinfo.df)
 #'
 #' @export
 #'

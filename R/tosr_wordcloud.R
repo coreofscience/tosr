@@ -1,10 +1,24 @@
 #' @name  tosr_wordcloud
-#' @title bibliometric analysis
-#' @description Compute the bibliometric analysis using bibliometrix library
-#' @param bibliometrix_objetc a bibliometix objetc
+#' @title Wordcloud of the cited references
+#' @description Generate wordcloud from the cited references (Only for .bib files)
+#' @param df_ref Dataframe of the cited references from the function tosR
+#' @param tos Dataframe of the tree of science subfields obtained from the function tosR
+#' @param word_remoce List of the words to remove from the wordcloud
+#' @param subfield Scalar name of the subfield you want to obtain the wordcloud. By default
+#'        is equal to 1, the biggest subfield.
 #' @usage tosr(df)
 #' @author Sebastian Robledo
 #' @return bibliometrix analysis plots
+#' @examples library(tosr)
+#' tosinfo <- tosr('scopus.bib','save.txt') # Tos process
+#' tos.df <- tosinfo$bibliometrix_df # Bibliometrix dataframe
+#' tos.g <- tosinfo$graph # Graph
+#' tos.tos_sub <- tosinfo$ToS_subfields # Tree of science subfields
+#' tos.cited <- tosinfo$cited_references # Cited references
+#' tos.sap <- tosinfo$TOs_sap # Tree of science
+#' complete_cites <- tosinfo$Tos_comple_table # Complete cites
+#' words_remove <- c('the','and','active','for','with','using')
+#' tosr_wordcloud(tos.cited, tos.tos_sub, subfield = 2, words_remove = words_remove)
 #'
 #' @export
 #
