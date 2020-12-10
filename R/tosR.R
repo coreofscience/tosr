@@ -55,7 +55,6 @@ tosR <- function(...){
                        return(NA)
                      },
                      warning=function(cond) {
-                       message("Warning en TOS subfields")
                        return(NULL)
                      })
 
@@ -81,8 +80,7 @@ tabla_completa <- function(g,TOSi,nodes){
   tabla_completa_TOS$Cite <- NA
   tabla_completa_TOS$doi  <- NA
 
-  tabla_completa_TOS$TOS[(tabla_completa_TOS$names %in% TOSi$id)] <- TOSi$TOS[!duplicated(TOSi$id)]
-
+  suppressWarnings(tabla_completa_TOS$TOS[tabla_completa_TOS$names %in% TOSi$id]<- TOSi$TOS)
   nodes$ID_TOS <- gsub(" ","",nodes$ID_TOS)
 
 
