@@ -177,6 +177,7 @@ mergeDbSources2 <- function(L,remove.duplicated=TRUE){
 grafo.bib <- function(scopus_dataframe){
   df_scopus <- scopus_dataframe %>%
     mutate(ID_TOS = str_extract(SR, ".*,"))
+  df_scopus$ID_TOS <- str_trim(df_scopus$ID_TOS)
 
   edge_list_scopus_type <-
     df_scopus %>%
@@ -238,6 +239,7 @@ grafo.bib <- function(scopus_dataframe){
 grafo.txt <- function(data_wos){
   data_wos <- data_wos %>%
     mutate(ID_TOS = str_extract(SR, ".*,"))
+  data_wos$ID_TOS <- str_trim(data_wos$ID_TOS)
 
   nodes_wos_type <-
     data_wos %>%
@@ -325,6 +327,9 @@ grafo_combinado <- function(biblio_wos_scopus){
   biblio_wos_scopus_type <-
     bind_rows(df_wos, df_scopus) %>%
     mutate(ID_TOS = str_extract(SR, ".*,"))
+
+  biblio_wos_scopus_type$ID_TOS <- str_trim(biblio_wos_scopus_type$ID_TOS)
+
 
 
   edge_list_wos_type <-
