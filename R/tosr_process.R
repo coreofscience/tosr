@@ -45,16 +45,43 @@ tosr_process <- function(graph, df, nodes, number_nodes) {
     n <- length(subfields$Var1)
   }
 
+ # for (i in seq(2,n)){
+ #   metricasi <- metricas %>% filter(subfield == subfields$Var1[i])
+ #   if (length(metricasi$id) <= number_nodes){
+ #     break
+ #   }
+ #   tosi <- TOS.process(metricas, metricasi, graph)
+ #   tosi$subfield <- i
+ #   tosi$subfield_graph <- subfields$Var1[i]
+ #   TOSi <-rbind(TOSi, tosi)
+ # }
+
+  options( warn = -1 )
   for (i in seq(2,n)){
     metricasi <- metricas %>% filter(subfield == subfields$Var1[i])
+
     if (length(metricasi$id) <= number_nodes){
       break
     }
-    tosi <- TOS.process(metricas, metricasi, graph)
-    tosi$subfield <- i
-    tosi$subfield_graph <- subfields$Var1[i]
-    TOSi <-rbind(TOSi, tosi)
+
+    tosi <- tryCatch({TOS.process(metricas, metricasi, graph)},
+                     error=function(cond) {
+                       return(NA)
+                     },
+                     warning=function(cond) {
+                       return(NULL)
+                     })
+
+    if (is.na(tosi[1])){
+      break
+    } else{
+      tosi$subfield <- i
+      tosi$subfield_graph <- subfields$Var1[i]
+      TOSi <-rbind(TOSi, tosi)
+    }
+    #print(i)
   }
+
 
   TOSi$id       <- gsub(" ","",TOSi$id)
   nodes$ID_TOS <- gsub(" ","",nodes$ID_TOS)
