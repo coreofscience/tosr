@@ -36,7 +36,7 @@ tosr.corpus <- function(titles){
   corp       <- VCorpus(VectorSource(titles))
   corp       <- tm_map(corp, removePunctuation)
   corp       <- tm_map(corp, removeWords, stopwords("spanish"))
-  corp       <- tm_map(corp, removeWords, tm::stopwords("en"))
+  corp       <- tm_map(corp, removeWords, stopwords("english"))
   corp       <- tm_map(corp, removeNumbers)
   #corp       <- tm_map(corp, stemDocument, language = "spanish")
   removeAccents <- content_transformer(function(x) chartr("áéíóú", "aeiou", x))

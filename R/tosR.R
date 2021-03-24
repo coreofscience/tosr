@@ -20,13 +20,13 @@
 #'
 tosR <- function(...){
 
-  df    <- tosr_load(...)
-  g     <- df$graph
-  nodes <- df$nodes
+  info    <- tosr_load(...)
+  g     <- info$graph
+  nodes <- info$nodes
+  biblio_wos_scopus   <- info$df
 
-  df1    <- df$df
   message("Computing TOS SAP")
-  TOS    <- tryCatch(tosSAP(g,df1,nodes),
+  TOS    <- tryCatch(tosSAP(g,biblio_wos_scopus,nodes),
                      error=function(cond) {
                        message('Error en Tos SAP')
                        return(NA)
@@ -37,36 +37,31 @@ tosR <- function(...){
                        return(NULL)
                      })
 
-  number_nodes = 50
   message("Computing TOS subfields")
-  TOSi   <- tryCatch(tosr_process(g,df1,nodes, number_nodes),
+  TOSi   <- tryCatch(tosr_process(g,biblio_wos_scopus,nodes, number_nodes = 50),
                      error=function(cond) {
                        message('Error en Tos Proces subfields, cambiar numero de nodos')
                        return(NA)
-                     },
-                     warning=function(cond) {
-                       message("Warning en TOS subfields")
-                       return(NULL)
                      })
 
-  TOSi   <- tryCatch(tosr_process(g,df1,nodes, number_nodes),
-                     error=function(cond) {
-                       message('Error en Tos Proces subfields, cambiar numero de nodos')
-                       return(NA)
-                     },
-                     warning=function(cond) {
-                       return(NULL)
-                     })
+ # TOSi   <- tryCatch(tosr_process(g,df1,nodes, number_nodes),
+  #                   error=function(cond) {
+   #                    message('Error en Tos Proces subfields, cambiar numero de nodos')
+  #                     return(NA)
+   #                  },
+  #                   warning=function(cond) {
+   #                    return(NULL)
+   #                  })
 
   tabla_completa_TOS   <- tabla_completa(g,TOSi,nodes)
 
 
-  ToS.info <- list(bibliometrix_df = df1,
+  ToS.info <- list(bibliometrix_df = biblio_wos_scopus,
                graph               = g,
                ToS_subfields       = TOSi,
                Tos_comple_table    = tabla_completa_TOS,
                TOs_sap             = TOS,
-               cited_references    = tosr.cited_ref(df1),
+               cited_references    = tosr.cited_ref(biblio_wos_scopus),
                nodes_atributes     = nodes)
   return(ToS.info)
 }
