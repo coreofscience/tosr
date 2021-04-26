@@ -43,3 +43,5 @@ Imports:
     rlang,
     rebus.base,
     tibble
+Depends: 
+    R (>= 2.10)
