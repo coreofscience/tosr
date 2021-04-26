@@ -1,37 +1,32 @@
-## Paquete tosr 
+# tosr
 
-# Paso 1
-Primero se debe instalar el paquete "remote" que sirve para gestionar el paquete 'tosr' en el Rstudio cloud. La siguiente instruccion se copia y se pega en la consala y se ejecuta. 
+## An R-tool to create the Tree of Science from WoS and Scopus
 
-install.packages("remotes")
+## Overview
 
-# Paso 2
-Para instalar el paquete de tosr en el Rstudio cloud se copia la siguiente instruccion y se ejecuta. Se espera un momento a que instale y luego se puede usar el paquete.  
+tosr read files from Web of Science (WoS) and Scopus and creates recommendation 
+dataframe using the metaphor of the tree. Papers in the root represent the 
+seminals. Papers in the trunk represent the structural, and papers in the 
+leaves present the current literature. 
 
-remotes::install_github("https://github.com/coreofscience/tosr" , dependencies = TRUE)
+## Suggested citation
 
-# **Ejemplo**
-- library(tosr)                             # Se carga libreria 
-- tosinfo <- tosR('scopus.bib','save.txt')  # Tos process
+We would appreciate a citation:
 
-# Informacion calculada y 'Tree of science'
-- tos.df         <- tosinfo$bibliometrix_df    # Bibliometrix dataframe
-- tos.g          <- tosinfo$graph              # Graph
-- tos.tos_sub    <- tosinfo$ToS_subfields      # Tree of science subfields
-- tos.cited      <- tosinfo$cited_references   # Cited references
-- tos.sap        <- tosinfo$TOs_sap            # Tree of science 
-- complete_cites <- tosinfo$Tos_comple_table   # Complete cites 
+Valencia-Hernández, D. S., Robledo, S., Pinilla, R., Duque-Méndez, N. D., & Olivar-Tost, G. (2020). SAP Algorithm for Citation Analysis: An improvement to Tree of Science. Ingeniería e Investigación, 40(1), 45-49.
 
+## Instalation
 
-# **Analisis bibliometrico**
-Summary <- tosr_bibliometix_analysis(tos.df)
+install.packages("tosr")
 
-# Wordcloud (funciona para archivos .bib)
-- words_remove <- c('the','and','active','for','with','using')
-- tosr_wordcloud(tos.cited, tos.tos_sub, subfield = 2, words_remove = words_remove)
+## Developers version
 
-# **Para actualizar**
-remotes::update_packages("tosr" , dependencies = TRUE)
+install.packages("devtools")
+devtools::install_github("coreofscience/tosr")
+
+Load tosr
+
+library(tosr)
 
 # References
 1. https://revistas.unal.edu.co/index.php/ingeinv/article/view/77718/0
