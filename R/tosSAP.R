@@ -11,6 +11,7 @@
 #' @export
 #' @importFrom rlang .data
 
+
 tosSAP <- function(graph,df,nodes){
 
   # Network metrics are created

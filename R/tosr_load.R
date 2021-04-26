@@ -4,6 +4,11 @@
 #'
 #' @param ... Web of Science or Scopus files
 #'
+#' @author Sebastian Robledo
+#'
+#' @importFrom rlang .data
+#' @importFrom rebus "%R%"
+#'
 #' @return List with the following fields: 'df','g','original_df' and 'extensions'.
 #'         'df': bibliometrix dataframe.
 #'         'g' : Graph from the cited references.
@@ -11,8 +16,8 @@
 #''original_df': dataframe from the original data, and
 #''extensions' : Type of files (.bib or .txt) loaded.
 #' @export
-#' @importFrom rlang .data
-#' @importFrom rebus "%R%"
+
+
 tosr_load <- function(...){
 
   file <- list(...)
