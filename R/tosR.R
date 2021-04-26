@@ -20,11 +20,11 @@ tosR <- function(...){
   message("Computing TOS SAP")
   ToS    <- tryCatch(tosSAP(g,biblio_wos_scopus,nodes),
                      error=function(cond) {
-                       message('Error en Tos SAP')
+                       message('Error in Tos SAP')
                        return(NA)
                      },
                      warning=function(cond) {
-                       message("Warning en TOS SAP")
+                       message("Warning in TOS SAP")
                        # Choose a return value in case of warning
                        return(NULL)
                      })
