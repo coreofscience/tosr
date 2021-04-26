@@ -1,30 +1,45 @@
 Package: tosr
-Type: Package
-Title: Tree of Science for Scientometrics in R
-Version: 0.1.0
-Author: person("Sebastian", "Robledo", email = "director@coreofscience.com", role = c("aut", "cre"))
-Maintainer: Sebastian Robledo <director@coreofscience.com>
-Description: This package is the implementation of the algoritm SAP for citation 
-             analisys and Scientometrics
-License: MIT
+Title: Create the Tree of Science from WoS and Scopus
+Version: 0.0.0.9000
+Authors@R: 
+    c(person(given = "Sebastian",
+           family = "Robledo",
+           role = c("aut", "cre"),
+           email = "sebastian.robledogi@amigo.edu.co",
+           comment = c(ORCID = "0000-0003-4357-4402")),
+    person(given = "Martha",
+           family = "Zuluaga",
+           role = c("aut"),
+           email = "martha.zuluaga@unad.edu.co",
+           comment = c(ORCID = "0000-0003-1720-8476")),
+    person(given = "Luis Alexander",
+           family = "Valencia Hernandez",
+           role = c("aut"),
+           email = "lavalenciah@unal.edu.co"),
+    person(given = "Centro de Bioinformática y Biología computacional de Colombia - BIOS",
+           role = c("cph", "fnd")))
+Description: The goal of "tosr" is to create the Tree 
+    of Science from Web of Science (WoS) and Scopus data. 
+    It can read files from both sources at the same time. 
+    Also, the new algorithm is implemented (SAP).
+License: MIT + file LICENSE
+URL: https://github.com/coreofscience/tosr
+BugReports: https://github.com/coreofscience/tosr/issues
 Encoding: UTF-8
 LazyData: true
-Depends: bibliometrix,
-         igraph, 
-         CINNA,
-         tidyverse,
-         dplyr, 
-         rebus, 
-         tm, 
-         wordcloud, 
-         wordcloud2
-Imports: bibliometrix,
-         igraph, 
-         CINNA,
-         tidyverse,
-         dplyr, 
-         rebus, 
-         tm, 
-         wordcloud, 
-         wordcloud2
+Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
+Imports: 
+    bibliometrix,
+    igraph,
+    CINNA,
+    dplyr,
+    rebus,
+    tm,
+    magrittr,
+    stringr,
+    tidyr,
+    stats,
+    rlang,
+    rebus.base,
+    tibble
