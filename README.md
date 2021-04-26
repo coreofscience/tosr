@@ -33,7 +33,6 @@ Summary <- tosr_bibliometix_analysis(tos.df)
 # **Para actualizar**
 remotes::update_packages("tosr" , dependencies = TRUE)
 
-# Referencias
+# References
 1. https://revistas.unal.edu.co/index.php/ingeinv/article/view/77718/0
-2. https://rdrr.io/cran/remotes/man/install_git.html
-2. https://www.bibliometrix.org/
+2. https://revistas.udistrital.edu.co/index.php/vinculos/article/view/9664

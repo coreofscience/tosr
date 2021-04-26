@@ -4,7 +4,7 @@
 \alias{tosSAP}
 \title{SAP algorithm for tree of science}
 \usage{
-TOS <- tosSAP(graph,df,nodes)
+tosSAP(graph, df, nodes)
 }
 \arguments{
 \item{graph}{A graph object with bibliometrix data obtained from function tosr_load}
@@ -18,7 +18,7 @@ Dataframe with tree of science
 }
 \description{
 Compute tree of science using SAP algorithm.
-             see: https://revistas.unal.edu.co/index.php/ingeinv/article/view/77718/0
+see: https://revistas.unal.edu.co/index.php/ingeinv/article/view/77718/0
 }
 \author{
 Sebastian Robledo

@@ -5,76 +5,79 @@
 #' @param graph A graph object with bibliometrix data obtained from function tosr_load
 #' @param df Bibliometrix data frame obtained from function tosr_load
 #' @param nodes Dataframe with nodes atributes obtained from function tosr_load
-#' @usage TOS <- tosSAP(graph,df,nodes)
 #' @author Sebastian Robledo
 #' @return Dataframe with tree of science
 #'
 #' @export
-#
+#' @importFrom rlang .data
 
 tosSAP <- function(graph,df,nodes){
 
-  # Se crean la metricas de la red
+  # Network metrics are created
 
-  metricas.red <- tibble(
-    id        = V(graph)$name,
-    indegree  = degree(graph, mode = "in"),
-    outdegree = degree(graph, mode = "out"),
-    bet       = betweenness(graph))
+  metricas.red <- tibble::tibble(
+    id        = igraph::V(graph)$name,
+    indegree  = igraph::degree(graph, mode = "in"),
+    outdegree = igraph::degree(graph, mode = "out"),
+    bet       = igraph::betweenness(graph))
 
   metricas.red <- metricas.red %>%
-    mutate(year = as.numeric(str_extract(id, "[0-9]{4}")))
+    dplyr::mutate(year = as.numeric(stringr::str_extract(.data$id, "[0-9]{4}")))
 
-  # Clasificacion de las raices
+  # Roots
 
   Raices <- metricas.red[metricas.red$outdegree == 0, c("id","indegree")] %>%
-    arrange(desc(indegree))
+    dplyr::arrange(dplyr::desc(.data$indegree))
   Raices <- Raices[1:10,]
 
 
-  # Clasificacion de las hojas
+  # leaves
+
   Hojas.ext <- metricas.red[metricas.red$indegree == 0, c("id","outdegree","year")]
   act.year  <- as.numeric(format(Sys.Date(),'%Y'))
   Hojas.ext <- Hojas.ext %>%
-    mutate(antiguedad = act.year - year) %>%
-    arrange(antiguedad)
-  Hojas     <- filter(Hojas.ext, antiguedad <= 5)
+    dplyr::mutate(antiguedad = act.year - .data$year) %>%
+    dplyr::arrange(.data$antiguedad)
+  Hojas     <- dplyr::filter(Hojas.ext, .data$antiguedad <= 5)
 
-  # Se determina el numero del vertice de las Hojas
+  # Number of vertices of leaves
+
   num.vertices.hojas <- c()
   for (vertice in Hojas$id){
     num.vertices.hojas <- c(num.vertices.hojas,which(metricas.red$id == vertice))
   }
 
-  # Se determina el numero del vertice de las raices
+  # Number of vertices of roots
+
   num.vertices.raices <- c()
   for (vertice in Raices$id){
     num.vertices.raices <- c(num.vertices.raices,which(metricas.red$id == vertice))
   }
 
-  # Calculo del SAP de las Hojas
+  # SAP for leaves
+
   SAP_hojas <- c()
   for (vert in Hojas$id){
-    h <- get.all.shortest.paths(graph,
-                                from = vert,
-                                to   = Raices$id,
-                                mode = "out")
+    h <- igraph::get.all.shortest.paths(graph,
+                                        from = vert,
+                                        to   = Raices$id,
+                                        mode = "out")
 
     SAP_hojas   <- c(SAP_hojas, length(h[[1]]))
   }
   Hojas <- Hojas %>%
-    mutate(SAP = SAP_hojas) %>%
-    arrange(desc(SAP))
+    dplyr::mutate(SAP = SAP_hojas) %>%
+    dplyr::arrange(dplyr::desc(.data$SAP))
 
   Hojas <- Hojas[1:60,] %>%
-    filter(SAP > 0)
+    dplyr::filter(.data$SAP > 0)
 
   Caminos   <- c()
   for (vert in Hojas$id){
-    h <- get.all.shortest.paths(graph,
-                                from = vert,
-                                to   = Raices$id,
-                                mode = "out")
+    h <- igraph::get.all.shortest.paths(graph,
+                                        from = vert,
+                                        to   = Raices$id,
+                                        mode = "out")
     lista.nodos <- unique(unlist(h[1]))
     lista.nodos <- lista.nodos[!(lista.nodos %in% num.vertices.raices)]
     lista.nodos <- lista.nodos[!(lista.nodos %in% num.vertices.hojas)]
@@ -83,16 +86,17 @@ tosSAP <- function(graph,df,nodes){
 
 
 
-  # Seleccion del tronco
+  # Trunk selection
 
   Tronco     <- metricas.red[unique(Caminos), c("id","indegree","year")]
   mas.nuevo  <- max(Tronco$year, na.rm = TRUE)
   Tronco     <- Tronco %>%
-    mutate(antiguedad = mas.nuevo - year)
+    dplyr::mutate(antiguedad = mas.nuevo - .data$year)
 
 
 
   # Tree of science
+
   Raices$TOS <- "Root"
   Hojas$TOS  <- "Leaves"
   Tronco$TOS <- "Trunk"

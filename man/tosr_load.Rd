@@ -2,29 +2,21 @@
 % Please edit documentation in R/tosr_load.R
 \name{tosr_load}
 \alias{tosr_load}
-\title{tosr_load}
+\title{Load Web of Science and Scopus files}
 \usage{
-data_info <- tosload('scopus.bib','save.txt')
+tosr_load(...)
 }
 \arguments{
-\item{...}{Names of scopus and web of science files}
+\item{...}{Web of Science or Scopus files}
 }
 \value{
 List with the following fields: 'df','g','original_df' and 'extensions'.
-        'df': bibliometrix dataframe.
-        'g' : Graphf from the cited references.
-     'nodes': dataframe with the nodes atributes of the graph,
+'df': bibliometrix dataframe.
+'g' : Graph from the cited references.
+'nodes': dataframe with the nodes atributes of the graph,
 'original_df': dataframe from the original data, and
 'extensions' : Type of files (.bib or .txt) loaded.
 }
 \description{
-Loading  files from scopus (.bib) and Web of science (.txt)
-}
-\examples{
-library(tosr)
-          file         <- "scopus.bib"
-          socopus_df   <- tosload(file) # Create scopus data frame
-}
-\author{
-Sebastian Robledo
+Loads files from Web of Science (txt) and from Scopus (bib) to create a citation graph
 }

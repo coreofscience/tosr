@@ -4,7 +4,7 @@
 \alias{tosR}
 \title{tosR process}
 \usage{
-data_info <- tosR(...)
+tosR(...)
 }
 \arguments{
 \item{...}{Names of scopus and web of science files}
@@ -14,19 +14,9 @@ list with graph, data frame of citations, subfields and Tree of science
 }
 \description{
 This function load de scopus and web of science files and generate
-             the graph (relations betwen the cited references), the bibliometrix
-             dataframe object, the tree of science for the subfields, the tree of
-             science for all the cited references,
-}
-\examples{
-library(tosr)
-tosinfo <- tosR('scopus.bib','save.txt') # Tos process
-tos.df <- tosinfo$bibliometrix_df # Bibliometrix dataframe
-tos.g <- tosinfo$graph # Graph
-tos.tos_sub <- tosinfo$ToS_subfields # Tree of science subfields
-tos.cited <- tosinfo$cited_references # Cited references
-tos.sap <- tosinfo$TOs_sap # Tree of science
-complete_cites <- tosinfo$Tos_comple_table # Complete cites
+the graph (relations betwen the cited references), the bibliometrix
+dataframe object, the tree of science for the subfields, the tree of
+science for all the cited references,
 }
 \author{
 Sebastian Robledo
