@@ -131,11 +131,13 @@ tosload_aux <- function(file){
 
 get.extension <- function(string){
 
-  lista =
-    str_extract(string = string,
-                pattern = "(\\.bib)|(\\.txt)")
+  list_1 =
+    string %>%
+    stringr::str_extract(pattern = "(\\.bib)|(\\.txt)") %>%
+    stringr::str_remove("\\.") %>%
+    list()
 
-  return(lista)
+  return(list_1)
 
 }
 
