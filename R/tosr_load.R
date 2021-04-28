@@ -16,6 +16,12 @@
 #''original_df': dataframe from the original data, and
 #''extensions' : Type of files (.bib or .txt) loaded.
 #' @export
+#'
+#' @examples
+#' \dontrun{
+#' my_tosr_load <- tosr_load("data-raw/co-citation_209.txt",
+#'                           "data-raw/co-citation_380.bib")
+#' }
 
 
 tosr_load <- function(...){
