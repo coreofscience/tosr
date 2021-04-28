@@ -123,5 +123,5 @@ tosSAP <- function(graph,df,nodes){
     }
 
   }
-  return(TOS)
+  return(TOS %>% select(-id))
 }
