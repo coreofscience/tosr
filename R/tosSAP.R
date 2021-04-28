@@ -10,6 +10,11 @@
 #'
 #' @export
 #' @importFrom rlang .data
+#'
+#' @examples
+#' \dontrun{
+#' my_tos <- tosSAP(my_tos_load$graph, my_tos_load$df, my_tos_load$nodes)
+#' }
 
 
 tosSAP <- function(graph,df,nodes){
