@@ -17,19 +17,19 @@ tosR <- function(...){
   nodes <- info$nodes
   biblio_wos_scopus   <- info$df
 
-  message("Computing TOS SAP")
+  message("Computing ToS SAP")
   ToS    <- tryCatch(tosSAP(g,biblio_wos_scopus,nodes),
                      error=function(cond) {
-                       message('Error in Tos SAP')
+                       message('Error in ToS SAP')
                        return(NA)
                      },
                      warning=function(cond) {
-                       message("Warning in TOS SAP")
+                       message("Warning in ToS SAP")
                        # Choose a return value in case of warning
                        return(NULL)
                      })
 
-  message("Computing TOS subfields")
+  message("Computing ToS subfields")
 
   return(ToS)
 }

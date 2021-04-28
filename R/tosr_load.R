@@ -4,7 +4,7 @@
 #'
 #' @param ... Web of Science or Scopus files
 #'
-#' @author Sebastian Robledo
+#' @author Luis Alexander Valencia Hernandez
 #'
 #' @importFrom rlang .data
 #' @importFrom rebus "%R%"
