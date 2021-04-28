@@ -22,8 +22,8 @@ Loads files from Web of Science (txt) and from Scopus (bib) to create a citation
 }
 \examples{
 \dontrun{
-my_tosr_load <- tosr_load("data-raw/co-citation_209.txt",
-                          "data-raw/co-citation_380.bib")
+my_tosr_load <- tosr_load("co-citation_209.txt",
+                          "co-citation_380.bib")
 }
 }
 \author{

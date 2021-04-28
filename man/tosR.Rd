@@ -20,8 +20,8 @@ science for all the cited references,
 }
 \examples{
 \dontrun{
-my_tosr <- tosR("data-raw/co-citation_209.txt",
-               "data-raw/co-citation_380.bib")
+my_tosr <- tosR("co-citation_209.txt",
+               "co-citation_380.bib")
 }
 }
 \author{
