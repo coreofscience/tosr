@@ -20,6 +20,12 @@ List with the following fields: 'df','g','original_df' and 'extensions'.
 \description{
 Loads files from Web of Science (txt) and from Scopus (bib) to create a citation graph
 }
+\examples{
+\dontrun{
+my_tosr_load <- tosr_load("data-raw/co-citation_209.txt",
+                          "data-raw/co-citation_380.bib")
+}
+}
 \author{
 Sebastian Robledo
 }

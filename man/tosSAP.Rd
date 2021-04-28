@@ -20,6 +20,11 @@ Dataframe with tree of science
 Compute tree of science using SAP algorithm.
 see: https://revistas.unal.edu.co/index.php/ingeinv/article/view/77718/0
 }
+\examples{
+\dontrun{
+my_tos <- tosSAP(my_tos_load$graph, my_tos_load$df, my_tos_load$nodes)
+}
+}
 \author{
 Sebastian Robledo
 }

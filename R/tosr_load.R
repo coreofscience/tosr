@@ -19,8 +19,8 @@
 #'
 #' @examples
 #' \dontrun{
-#' my_tosr_load <- tosr_load("data-raw/co-citation_209.txt",
-#'                           "data-raw/co-citation_380.bib")
+#' my_tosr_load <- tosr_load("co-citation_209.txt",
+#'                           "co-citation_380.bib")
 #' }
 
 
@@ -83,9 +83,7 @@ tosr_load <- function(...){
     #cited_ref <- tosr.cited_ref(M)
     return(list(df=M,
                 graph=grafo$graph,
-                nodes = grafo$nodes,
-                original_df = original_df,
-                extensiones = extensions))
+                nodes = grafo$nodes))
   }
 }
 
