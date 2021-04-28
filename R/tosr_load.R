@@ -21,8 +21,7 @@
 tosr_load <- function(...){
 
   file <- list(...)
-  extensions <- unlist(lapply(file,
-                              get.extension))
+  extensions <- unlist(lapply(file, get.extension))
 
   if (length(file) == 1){
     print('1')
@@ -32,14 +31,10 @@ tosr_load <- function(...){
 
   if (length(file) > 1){
     print(length(file))
-    d <- lapply(file,
-                tosload_aux2)
-
-    original_df <- mergeDbSources2(d,
-                                   remove.duplicated=FALSE)
+    d <- lapply(file, tosload_aux2)
+    original_df <- mergeDbSources2(d,remove.duplicated=FALSE)
     M <- mergeDbSources2(d)%>%
-      dplyr::mutate(ID_TOS = stringr::str_extract(.data$SR,
-                                                  ".*,"))
+      dplyr::mutate(ID_TOS = stringr::str_extract(.data$SR, ".*,"))
 
     extension_unica <-unique(extensions)
     if (length(extension_unica) > 1){
@@ -93,18 +88,13 @@ tosload_aux <- function(file){
   extension <- get.extension(file)
 
   if (extension == "bib"){
-    scopus_dataframe <- bibliometrix::convert2df(file = file,
-                                                 dbsource = "scopus",
-                                                 format   = "bibtex") %>%
-      dplyr::mutate(SR_TOS = stringr::str_extract(.data$SR,
-                                                  rebus::one_or_more(rebus::WRD) %R%
+    scopus_dataframe <- bibliometrix::convert2df(file = file, dbsource = "scopus", format   = "bibtex") %>%
+      dplyr::mutate(SR_TOS = stringr::str_extract(.data$SR, rebus::one_or_more(rebus::WRD) %R%
                                                     rebus::SPC %R% rebus::one_or_more(rebus::WRD) %R%
                                                     "," %R% rebus::SPC %R%
                                                     rebus::one_or_more(rebus::DGT) %R% ","),
-                    SR_TOS = stringr::str_c(.data$SR_TOS,
-                                            " ", .data$SO)) %>%
-      dplyr::mutate(ID_TOS = stringr::str_extract(.data$SR,
-                                                  ".*,"),
+                    SR_TOS = stringr::str_c(.data$SR_TOS, " ", .data$SO)) %>%
+      dplyr::mutate(ID_TOS = stringr::str_extract(.data$SR, ".*,"),
                     ref_type = 'scopus')
     grafo <- grafo.bib(scopus_dataframe)
 
@@ -114,14 +104,18 @@ tosload_aux <- function(file){
   }
 
   if (extension == "txt"){
+
     data_wos <- bibliometrix::convert2df(file = file,
                                          dbsource = "wos",
                                          format   = "plaintext")%>%
       dplyr::mutate(ID_TOS   = stringr::str_extract(.data$SR,
                                                     ".*,"),
                     ref_type = 'wos')
+
     grafo <- grafo.txt(data_wos)
+
     cited_ref <- tosr.cited_ref(data_wos)
+
     return(list(df = data_wos,
                 graph = grafo$graph,
                 nodes = grafo$nodes))
@@ -131,17 +125,11 @@ tosload_aux <- function(file){
 
 get.extension <- function(string){
 
-  list_1 =
-    string %>%
-    stringr::str_extract(pattern = "(\\.bib)|(\\.txt)") %>%
-    stringr::str_remove("\\.") %>%
-    list()
-
-  return(list_1)
-
+  lista <- unlist(strsplit(string,split = ".",fixed = T))
+  return(lista[2])
 }
 
-mergeDbSources2 <- function(L, remove.duplicated=TRUE){
+mergeDbSources2 <- function(L,remove.duplicated=TRUE){
 
   ###
   #L <- list(...)
@@ -238,7 +226,7 @@ grafo.bib <- function(scopus_dataframe){
     igraph::graph.data.frame(edge_list_scopus_type) %>%
     igraph::simplify()
 
-  # Se eliminan los vertices con indegree = 1 y con outdegree = 0
+  # Vertices with indegree = 1 and outdegree = 0
   graph_1 <-
     igraph::delete.vertices(graph,
                             which(igraph::degree(graph, mode = "in") == 1 &
@@ -315,8 +303,7 @@ grafo.txt <- function(data_wos){
     igraph::set_vertex_attr(name = "subfield",
                             value = igraph::membership(subareas))
 
-  return(list(graph = graph,
-              nodes = nodes_wos_type))
+  return(list(graph = graph, nodes = nodes_wos_type))
 }
 
 tosload_aux2 <- function(file){
@@ -324,16 +311,12 @@ tosload_aux2 <- function(file){
   extension <- get.extension(file)
 
   if (extension == "bib"){
-    scopus_dataframe <- bibliometrix::convert2df(file = file,
-                                                 dbsource = "scopus",
-                                                 format   = "bibtex")
+    scopus_dataframe <- bibliometrix::convert2df(file = file, dbsource = "scopus", format   = "bibtex")
     return(scopus_dataframe)
   }
 
   if (extension == "txt"){
-    data_wos <- bibliometrix::convert2df(file = file,
-                                         dbsource = "wos",
-                                         format   = "plaintext")
+    data_wos <- bibliometrix::convert2df(file = file, dbsource = "wos", format   = "plaintext")
     return(data_wos)
   }
 
@@ -466,7 +449,9 @@ grafo_combinado <- function(biblio_wos_scopus){
 
 tosr.cited_ref <- function(df){
   df     <- tosr.SRTOS(df)
-  df$CR  <- stringr::str_replace(df$CR,  "; ", ";")
+  df$CR  <- stringr::str_replace(df$CR,
+                                 "; ",
+                                 ";")
 
   pattern_authors <-
     rebus::SPC %R%
@@ -499,20 +484,33 @@ tosr.cited_ref <- function(df){
     df %>%
     tidyr::separate_rows(.data$CR, sep = ";") %>%
     dplyr::select(.data$SR_TOS, .data$CR, .data$SR, .data$ref_type) %>%
-    dplyr::mutate(CR_AUTHOR = stringr::str_remove(.data$CR, pattern_authors),
-                  CR_TITLE_1 = stringr::str_extract(.data$CR, pattern_authors),
-                  CR_TITLE = stringr::str_remove(.data$CR_TITLE_1, pattern_titles),
+    dplyr::mutate(CR_AUTHOR = stringr::str_remove(.data$CR,
+                                                  pattern_authors),
+                  CR_TITLE_1 = stringr::str_extract(.data$CR,
+                                                    pattern_authors),
+                  CR_TITLE = stringr::str_remove(.data$CR_TITLE_1,
+                                                 pattern_titles),
                   CR_TITLE = stringr::str_trim(.data$CR_TITLE),
-                  CR_YEAR_1 <- stringr::str_extract(.data$CR_TITLE_1, pattern_titles),
-                  CR_YEAR = stringr::str_extract(.data$CR_YEAR_1, rebus::repeated(rebus::DGT, 4)),
-                  CR_JOURNAL_1 = stringr::str_remove(.data$CR_YEAR_1, pattern_year),
-                  CR_JOURNAL = stringr::str_extract(.data$CR_JOURNAL_1, pattern_journal),
+                  CR_YEAR_1 = stringr::str_extract(.data$CR_TITLE_1,
+                                                   pattern_titles),
+                  CR_YEAR = stringr::str_extract(.data$CR_YEAR_1,
+                                                 rebus::repeated(rebus::DGT,
+                                                                 4)),
+                  CR_JOURNAL_1 = stringr::str_remove(.data$CR_YEAR_1,
+                                                     pattern_year),
+                  CR_JOURNAL = stringr::str_extract(.data$CR_JOURNAL_1,
+                                                    pattern_journal),
                   CR_JOURNAL = stringr::str_trim(.data$CR_JOURNAL),
-                  CR_VOLUME_1 = stringr::str_remove(.data$CR_JOURNAL_1, pattern_journal),
-                  CR_VOLUME = stringr::str_extract(.data$CR_VOLUME_1, pattern_volume),
-                  CR_PAGES = stringr::str_extract(.data$CR_VOLUME_1, pattern_pages),
-                  CR_PAGES = stringr::str_remove(.data$CR_PAGES, "PP. "),
-                  ID_TOS = stringr::str_extract(.data$SR, ".*,")) %>%
+                  CR_VOLUME_1 = stringr::str_remove(.data$CR_JOURNAL_1,
+                                                    pattern_journal),
+                  CR_VOLUME = stringr::str_extract(.data$CR_VOLUME_1,
+                                                   pattern_volume),
+                  CR_PAGES = stringr::str_extract(.data$CR_VOLUME_1,
+                                                  pattern_pages),
+                  CR_PAGES = stringr::str_remove(.data$CR_PAGES,
+                                                 "PP. "),
+                  ID_TOS = stringr::str_extract(.data$SR,
+                                                ".*,")) %>%
     dplyr::select(.data$SR_TOS,
                   .data$CR,
                   .data$CR_AUTHOR,
