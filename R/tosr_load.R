@@ -22,8 +22,6 @@
 #' my_tosr_load <- tosr_load("data-raw/co-citation_209.txt",
 #'                           "data-raw/co-citation_380.bib")
 #' }
-
-
 tosr_load <- function(...){
 
   file <- list(...)
