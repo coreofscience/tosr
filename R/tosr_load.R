@@ -492,7 +492,7 @@ tosr.cited_ref <- function(df){
                                                  pattern_titles),
                   CR_TITLE = stringr::str_trim(.data$CR_TITLE),
                   CR_YEAR_1 = stringr::str_extract(.data$CR_TITLE_1,
-                                                    pattern_titles),
+                                                   pattern_titles),
                   CR_YEAR = stringr::str_extract(.data$CR_YEAR_1,
                                                  rebus::repeated(rebus::DGT,
                                                                  4)),
