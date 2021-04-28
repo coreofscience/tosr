@@ -104,11 +104,18 @@ tosload_aux <- function(file){
   }
 
   if (extension == "txt"){
-    data_wos <- bibliometrix::convert2df(file = file, dbsource = "wos", format   = "plaintext")%>%
-      dplyr::mutate(ID_TOS   = stringr::str_extract(.data$SR, ".*,"),
+
+    data_wos <- bibliometrix::convert2df(file = file,
+                                         dbsource = "wos",
+                                         format   = "plaintext")%>%
+      dplyr::mutate(ID_TOS   = stringr::str_extract(.data$SR,
+                                                    ".*,"),
                     ref_type = 'wos')
+
     grafo <- grafo.txt(data_wos)
+
     cited_ref <- tosr.cited_ref(data_wos)
+
     return(list(df = data_wos,
                 graph = grafo$graph,
                 nodes = grafo$nodes))
@@ -219,7 +226,7 @@ grafo.bib <- function(scopus_dataframe){
     igraph::graph.data.frame(edge_list_scopus_type) %>%
     igraph::simplify()
 
-  # Se eliminan los vertices con indegree = 1 y con outdegree = 0
+  # Vertices with indegree = 1 and outdegree = 0
   graph_1 <-
     igraph::delete.vertices(graph,
                             which(igraph::degree(graph, mode = "in") == 1 &
@@ -442,7 +449,9 @@ grafo_combinado <- function(biblio_wos_scopus){
 
 tosr.cited_ref <- function(df){
   df     <- tosr.SRTOS(df)
-  df$CR  <- stringr::str_replace(df$CR,  "; ", ";")
+  df$CR  <- stringr::str_replace(df$CR,
+                                 "; ",
+                                 ";")
 
   pattern_authors <-
     rebus::SPC %R%
@@ -475,20 +484,33 @@ tosr.cited_ref <- function(df){
     df %>%
     tidyr::separate_rows(.data$CR, sep = ";") %>%
     dplyr::select(.data$SR_TOS, .data$CR, .data$SR, .data$ref_type) %>%
-    dplyr::mutate(CR_AUTHOR = stringr::str_remove(.data$CR, pattern_authors),
-                  CR_TITLE_1 = stringr::str_extract(.data$CR, pattern_authors),
-                  CR_TITLE = stringr::str_remove(.data$CR_TITLE_1, pattern_titles),
+    dplyr::mutate(CR_AUTHOR = stringr::str_remove(.data$CR,
+                                                  pattern_authors),
+                  CR_TITLE_1 = stringr::str_extract(.data$CR,
+                                                    pattern_authors),
+                  CR_TITLE = stringr::str_remove(.data$CR_TITLE_1,
+                                                 pattern_titles),
                   CR_TITLE = stringr::str_trim(.data$CR_TITLE),
-                  CR_YEAR_1 <- stringr::str_extract(.data$CR_TITLE_1, pattern_titles),
-                  CR_YEAR = stringr::str_extract(.data$CR_YEAR_1, rebus::repeated(rebus::DGT, 4)),
-                  CR_JOURNAL_1 = stringr::str_remove(.data$CR_YEAR_1, pattern_year),
-                  CR_JOURNAL = stringr::str_extract(.data$CR_JOURNAL_1, pattern_journal),
+                  CR_YEAR_1 = stringr::str_extract(.data$CR_TITLE_1,
+                                                    pattern_titles),
+                  CR_YEAR = stringr::str_extract(.data$CR_YEAR_1,
+                                                 rebus::repeated(rebus::DGT,
+                                                                 4)),
+                  CR_JOURNAL_1 = stringr::str_remove(.data$CR_YEAR_1,
+                                                     pattern_year),
+                  CR_JOURNAL = stringr::str_extract(.data$CR_JOURNAL_1,
+                                                    pattern_journal),
                   CR_JOURNAL = stringr::str_trim(.data$CR_JOURNAL),
-                  CR_VOLUME_1 = stringr::str_remove(.data$CR_JOURNAL_1, pattern_journal),
-                  CR_VOLUME = stringr::str_extract(.data$CR_VOLUME_1, pattern_volume),
-                  CR_PAGES = stringr::str_extract(.data$CR_VOLUME_1, pattern_pages),
-                  CR_PAGES = stringr::str_remove(.data$CR_PAGES, "PP. "),
-                  ID_TOS = stringr::str_extract(.data$SR, ".*,")) %>%
+                  CR_VOLUME_1 = stringr::str_remove(.data$CR_JOURNAL_1,
+                                                    pattern_journal),
+                  CR_VOLUME = stringr::str_extract(.data$CR_VOLUME_1,
+                                                   pattern_volume),
+                  CR_PAGES = stringr::str_extract(.data$CR_VOLUME_1,
+                                                  pattern_pages),
+                  CR_PAGES = stringr::str_remove(.data$CR_PAGES,
+                                                 "PP. "),
+                  ID_TOS = stringr::str_extract(.data$SR,
+                                                ".*,")) %>%
     dplyr::select(.data$SR_TOS,
                   .data$CR,
                   .data$CR_AUTHOR,
