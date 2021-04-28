@@ -18,6 +18,12 @@ the graph (relations betwen the cited references), the bibliometrix
 dataframe object, the tree of science for the subfields, the tree of
 science for all the cited references,
 }
+\examples{
+\dontrun{
+my_tosr <- tosR("data-raw/co-citation_209.txt",
+               "data-raw/co-citation_380.bib")
+}
+}
 \author{
 Sebastian Robledo
 }

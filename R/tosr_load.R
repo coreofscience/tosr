@@ -83,9 +83,7 @@ tosr_load <- function(...){
     #cited_ref <- tosr.cited_ref(M)
     return(list(df=M,
                 graph=grafo$graph,
-                nodes = grafo$nodes,
-                original_df = original_df,
-                extensiones = extensions))
+                nodes = grafo$nodes))
   }
 }
 
