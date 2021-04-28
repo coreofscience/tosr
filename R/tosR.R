@@ -10,6 +10,11 @@
 #
 #' @export
 #'
+#' @examples
+#' \dontrun{
+#' my_tosr <- tosR("data-raw/co-citation_209.txt",
+#'                "data-raw/co-citation_380.bib")
+#' }
 tosR <- function(...){
 
   info    <- tosr_load(...)
