@@ -1,0 +1,33 @@
+---
+title: "ToS-dummy"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{ToS-dummy}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(tosr)
+```
+
+This vignette explains how to use tosr with an example.
+
+# History
+
+tosr package creates the tree of science of a topic from Web of Science and Scopus. The Tree of Science concept was part of a doctorate thesis; the first paper is here:
+
+<https://revistas.udistrital.edu.co/index.php/vinculos/article/download/9664/10837>
+
+The concept become very popular in Colombia (South America).
+
+We keep working in the concept and improving the algorithm during these years, and in 2020 a more sophisticate paper was accepted:
+
+<http://www.scielo.org.co/scielo.php?pid=S0120-56092020000100045&script=sci_arttext&tlng=en>
