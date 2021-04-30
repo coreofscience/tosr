@@ -27,7 +27,7 @@ Description: The goal of "tosr" is to create the Tree
     of Science from Web of Science (WoS) and Scopus data. 
     It can read files from both sources at the same time. 
     Also, the new algorithm is implemented (SAP).
-License: GPL-3
+License: GPL-3 + file LICENSE
 URL: https://github.com/coreofscience/tosr
 BugReports: https://github.com/coreofscience/tosr/issues
 Encoding: UTF-8
