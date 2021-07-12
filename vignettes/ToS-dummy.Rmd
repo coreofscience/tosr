@@ -30,4 +30,4 @@ The concept become very popular in Colombia (South America).
 
 We keep working in the concept and improving the algorithm during these years, and in 2020 a more sophisticate paper was accepted:
 
-<http://www.scielo.org.co/scielo.php?pid=S0120-56092020000100045&script=sci_arttext&tlng=en>
+<https://revistas.unal.edu.co/index.php/ingeinv/article/view/77718/0>
