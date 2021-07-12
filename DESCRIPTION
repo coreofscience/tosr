@@ -23,10 +23,11 @@ Authors@R:
            email = "lavalenciah@unal.edu.co"),
     person(given = "Centro de Bioinformática y Biología computacional de Colombia - BIOS",
            role = c("cph", "fnd")))
-Description: The goal of 'tosr' is to create the Tree 
-    of Science from Web of Science (WoS) and Scopus data. 
-    It can read files from both sources at the same time. 
-    More information can be found in Valencia-Hernández (2020) <doi:10.15446/ing.investig.v40n1.77718>
+Description: The goal of 'tosr' is to create the Tree of Science from 
+             Web of Science (WoS) and Scopus data. It can read files 
+             from both sources at the same time. More information 
+             can be found in Valencia-Hernández (2020) 
+             <doi:10.15446/ing.investig.v40n1.77718>.
 License: MIT + file LICENSE
 URL: https://github.com/coreofscience/tosr, https://coreofscience.github.io/tosr/
 BugReports: https://github.com/coreofscience/tosr/issues
