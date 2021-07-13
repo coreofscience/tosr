@@ -7,8 +7,7 @@
 #' 3. nodes: A tibble with the complete information of each node
 #' from graph dataset (1).
 #'
-#' @format A list with two dataset
+#' @format A list with two datasets from a search in Scopus and Web of Knowledge
 #'
-#' @source \url{https://www.scopus.com} \url{https://www.webofknowledge.com}
 #'
 "my_tosr_load"

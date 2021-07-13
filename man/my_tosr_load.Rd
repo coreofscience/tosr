@@ -5,10 +5,7 @@
 \alias{my_tosr_load}
 \title{A list with data to create ToS}
 \format{
-A list with two dataset
-}
-\source{
-\url{https://www.scopus.com} \url{https://www.webofknowledge.com}
+A list with two datasets from a search in Scopus and Web of Knowledge
 }
 \usage{
 my_tosr_load
