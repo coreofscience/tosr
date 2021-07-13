@@ -7,4 +7,4 @@
 
 0 errors | 0 warnings | 1 note
 
-* This is a resubmit release. We added a serious version name (0.1.0), removed double quote, and added more information about the method in the in Description section. 
+* This is a resubmit release. We removed the links in the dataset documentation and added the url format in the DESCRIPTION file.   
