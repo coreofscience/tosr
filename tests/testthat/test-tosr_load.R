@@ -5,6 +5,6 @@ test_that("create ToS correctly", {
     nrow(tosSAP(my_tosr_load$graph,
                 my_tosr_load$df,
                 my_tosr_load$nodes)),
-    141
+    137
   )
 })
