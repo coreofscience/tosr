@@ -7,4 +7,4 @@
 
 0 errors | 0 warnings | 1 note
 
-* This is a resubmit release. We removed the links in the dataset documentation and added the url format in the DESCRIPTION file.   
+* This is a resubmit release. We update the correct outcome of the tests  
