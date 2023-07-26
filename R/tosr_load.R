@@ -186,8 +186,6 @@ mergeDbSources2 <- function(L,remove.duplicated=TRUE){
   return(M)
 }
 
-
-
 grafo.bib <- function(scopus_dataframe){
   df_scopus <- scopus_dataframe %>%
     dplyr::mutate(ID_TOS = stringr::str_extract(.data$SR, ".*,"))
@@ -207,7 +205,6 @@ grafo.bib <- function(scopus_dataframe){
     dplyr::mutate(CR = paste0(.data$lastname, ", ", .data$year, ",")) %>%
     dplyr::select(.data$ID_TOS, .data$CR)
 
-
   nodes_scopus_type <-
     df_scopus %>%
     tidyr::separate_rows(.data$CR, sep = ";") %>%
@@ -224,33 +221,33 @@ grafo.bib <- function(scopus_dataframe){
     unique() %>%
     dplyr::select(.data$ID_TOS, .data$CITE)
 
-
-
   graph <-
     igraph::graph.data.frame(edge_list_scopus_type) %>%
     igraph::simplify()
 
   # Vertices with indegree = 1 and outdegree = 0
-  graph_1 <-
-    igraph::delete.vertices(graph,
-                            which(igraph::degree(graph, mode = "in") == 1 &
-                                    igraph::degree(graph, mode = "out") == 0))
+  graph_1 <- igraph::delete.vertices(graph,
+                                     which(igraph::degree(graph, mode = "in") == 1 &
+                                             igraph::degree(graph, mode = "out") == 0))
 
   # Se escoge el componente mas grande conectado
-  graph_2 <- CINNA::giant_component_extract(graph_1, directed = TRUE)
-  graph_2 <- graph_2[[1]]
+  # Code from get_giant_component function
+  components <- igraph::components(graph_1)
+  idx_of_giant_component <- which.max(components$csize)
+  vertices_of_giant_component <- which(components$membership == idx_of_giant_component)
+  graph_2 <- igraph::induced_subgraph(graph_1, vertices_of_giant_component)
 
-  subareas <-
-    igraph::as.undirected(graph_2,
-                          mode = "each") %>%
+  subareas <- igraph::as.undirected(graph_2,
+                                    mode = "each") %>%
     igraph::cluster_louvain()
 
-  graph_2 <-
-    graph_2 %>%
+  graph_2 <- graph_2 %>%
     igraph::set_vertex_attr(name = "subfield",
                             value = igraph::membership(subareas))
+
   return(list(graph = graph_2, nodes = nodes_scopus_type))
 }
+
 
 grafo.txt <- function(data_wos){
   data_wos <- data_wos %>%
