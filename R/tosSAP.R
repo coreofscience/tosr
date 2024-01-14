@@ -16,6 +16,7 @@
 #' my_tos <- tosSAP(my_tos_load$graph, my_tos_load$df, my_tos_load$nodes)
 #' }
 
+utils::globalVariables(c("id", "indegree", "outdegree", "year", "antiguedad", "SAP"))
 
 tosSAP <- function(graph,df,nodes){
 
@@ -28,12 +29,12 @@ tosSAP <- function(graph,df,nodes){
     bet       = igraph::betweenness(graph))
 
   metricas.red <- metricas.red %>%
-    dplyr::mutate(year = as.numeric(stringr::str_extract(.data$id, "[0-9]{4}")))
+    dplyr::mutate(year = as.numeric(stringr::str_extract(id, "[0-9]{4}")))
 
   # Roots
 
   Raices <- metricas.red[metricas.red$outdegree == 0, c("id","indegree")] %>%
-    dplyr::arrange(dplyr::desc(.data$indegree))
+    dplyr::arrange(dplyr::desc(indegree))
   Raices <- Raices[1:10,]
 
 
@@ -42,9 +43,9 @@ tosSAP <- function(graph,df,nodes){
   Hojas.ext <- metricas.red[metricas.red$indegree == 0, c("id","outdegree","year")]
   act.year  <- as.numeric(format(Sys.Date(),'%Y'))
   Hojas.ext <- Hojas.ext %>%
-    dplyr::mutate(antiguedad = act.year - .data$year) %>%
-    dplyr::arrange(.data$antiguedad)
-  Hojas     <- dplyr::filter(Hojas.ext, .data$antiguedad <= 5)
+    dplyr::mutate(antiguedad = act.year - year) %>%
+    dplyr::arrange(antiguedad)
+  Hojas     <- dplyr::filter(Hojas.ext, antiguedad <= 5)
 
   # Number of vertices of leaves
 
@@ -73,10 +74,10 @@ tosSAP <- function(graph,df,nodes){
   }
   Hojas <- Hojas %>%
     dplyr::mutate(SAP = SAP_hojas) %>%
-    dplyr::arrange(dplyr::desc(.data$SAP))
+    dplyr::arrange(dplyr::desc(SAP))
 
   Hojas <- Hojas[1:60,] %>%
-    dplyr::filter(.data$SAP > 0)
+    dplyr::filter(SAP > 0)
 
   Caminos   <- c()
   for (vert in Hojas$id){
@@ -97,7 +98,7 @@ tosSAP <- function(graph,df,nodes){
   Tronco     <- metricas.red[unique(Caminos), c("id","indegree","year")]
   mas.nuevo  <- max(Tronco$year, na.rm = TRUE)
   Tronco     <- Tronco %>%
-    dplyr::mutate(antiguedad = mas.nuevo - .data$year)
+    dplyr::mutate(antiguedad = mas.nuevo - year)
 
 
 

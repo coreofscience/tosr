@@ -3,9 +3,6 @@
 \name{tosSAP}
 \alias{tosSAP}
 \title{SAP algorithm for tree of science}
-\usage{
-tosSAP(graph, df, nodes)
-}
 \arguments{
 \item{graph}{A graph object with bibliometrix data obtained from function tosr_load}
 

@@ -1,6 +1,6 @@
 Package: tosr
 Title: Create the Tree of Science from WoS and Scopus
-Version: 0.1.3
+Version: 0.1.4
 Authors@R: 
     c(person(given = "Sebastian",
            family = "Robledo",
